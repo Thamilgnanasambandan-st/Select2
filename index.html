@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.js"
+        integrity="sha512-6DC1eE3AWg1bgitkoaRM1lhY98PxbMIbhgYCGV107aZlyzzvaWCW1nJW2vDuYQm06hXrW0As6OGKcIaAVWnHJw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="/select2.css" />
+    <script src="/select2.js"></script>
+
+</head>
+
+<body>
+    <div class="flex w-full items-center justify-center">
+        <div class="select2-dropdown mt-8 mr-10" id="test-1">
+            <div class="px-5 py-1 select2-header">
+                <div class="placeholder-icon"></div>
+                <div>Select checkbox</div>
+            </div>
+            <div class="select2-body"></div>
+        </div>
+        <div class="select2-dropdown mt-8 " id="test-2">
+            <div class="px-5 py-1 select2-header">
+                <div class="placeholder-icon"></div>
+                <div>Select Radio</div>
+            </div>
+            <div class="select2-body"></div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+          var x =  $('#test-1').select2({
+                dataType: 'checkbox'
+            })
+            $('#test-2').select2({
+                dataType: 'radio'
+            })
+           
+        });
+
+    </script>
+</body>
+
+</html>
