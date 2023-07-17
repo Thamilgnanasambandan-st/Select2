@@ -57,7 +57,7 @@
                   </div>`);
                 }
                 if(body_content.children(`.select-options`).length >= 5){
-                    body_content.prepend(`<input type="text" class='border mb-2 px-2'  name="search">`)
+                    body_content.prepend(`<input type="text" class='border mb-2 px-2' placeholder='Search'  name="search">`)
                 }
             },
             placeholderIcons: '<i class="fa-solid fa-magnifying-glass"></i>'
