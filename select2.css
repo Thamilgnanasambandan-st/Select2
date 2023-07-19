@@ -32,6 +32,10 @@
   min-width: 100%;
  
 }
+.drop-body ul{
+  max-height: 200px;
+  overflow: auto;
+}
 .drop-body ul li{
   padding: 5px 10px;
 }

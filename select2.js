@@ -60,31 +60,30 @@
                 $(select_data).each(function (index, val) {
                     $(this).on('click', function () {
                         $el.trigger('drop2:selecting');
-                        console.log($(this).attr('drop-selected'))
                         if($el.attr('multiple')=='multiple' && $(this).attr('drop-selected') == 'true'){
-                            $($el).find(`option[data-drop2-id='${$(this).attr('data-drop2-id')}']`).prop('selected', false);
+                         $($el).find(`option[data-drop2-id='${$(this).attr('data-drop2-id')}']`).prop('selected', false);
+
                         }else{
                             $($el).find(`option[data-drop2-id='${$(this).attr('data-drop2-id')}']`).prop('selected', true);
                         }
                         $el.trigger('drop2:select');
-                        slectedOptions();
+                        output.update($el)
                     })
-                    function slectedOptions() {
-                        $($el).children("option").each(function () {
-                            selected_data = $(this).attr('data-drop2-id')
-                            if ($(this).is(':selected')) {
-                                $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).attr('drop-selected', true)
-                            } else {
-                                $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).attr('drop-selected', false)
-                            }
-                        })
-                    }
+                   
                 })
 
             },
 
-            'update': function () {
-
+            'update': function ($el) {
+                $($el).children("option").each(function () {
+                    selected_data = $(this).attr('data-drop2-id');
+                    if ($(this).is(':selected')) {
+                        $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).attr('drop-selected', true)
+                    } else {
+                        $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).attr('drop-selected', false);
+                        $($el).next(`.drop-container`).find(`.drop-header`).text($el.val())
+                    }
+                })
             },
             'destroy': function () {
 
