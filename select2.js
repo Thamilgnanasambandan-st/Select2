@@ -43,14 +43,19 @@
             },
             'create': function ($el) {
                 $el.hide()
-                if ($el.val() == '') {
-                    $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>Select Options</div> <div class='drop-body' drop-render='hide'><ul></ul></div></div>`)
+                if ($el.attr('multiple') == 'multiple') {
+                    $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>Select Options</div> <div class='drop-body' drop-render='hide'><ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='deop-select'>submit</a></div></div></div>`)
                 } else {
                     $el.after(`<div class='drop-container'><div class='drop-header'>${$el.val()}</div> <div class='drop-body' drop-render='hide'><ul></ul></div></div>`)
                 }
                 $($el).children('option').each(function (index, val) {
                     $(this).attr("data-drop2-id", `${index}`);
-                    $($el).next(`.drop-container`).find(`.drop-body ul`).append(`<li data-drop2-id='${index}' drop-selected='false'>${$(this).text()}</li>`)
+                    if($(this).is(':selected')){
+                        $($el).next(`.drop-container`).find(`.drop-body ul`).append(`<li data-drop2-id='${index}' drop-selected='true'>${$(this).text()}</li>`)
+                    }else{
+                        ($el).next(`.drop-container`).find(`.drop-body ul`).append(`<li data-drop2-id='${index}' drop-selected='false'>${$(this).text()}</li>`)
+                    }
+                   
                 });
             },
             'choose': function ($el) {
@@ -60,18 +65,15 @@
                 $(select_data).each(function (index, val) {
                     $(this).on('click', function () {
                         $el.trigger('drop2:selecting');
-                        if($el.attr('multiple')=='multiple' && $(this).attr('drop-selected') == 'true'){
-                         $($el).find(`option[data-drop2-id='${$(this).attr('data-drop2-id')}']`).prop('selected', false);
-
-                        }else{
+                        if ($el.attr('multiple') == 'multiple' && $(this).attr('drop-selected') == 'true') {
+                            $($el).find(`option[data-drop2-id='${$(this).attr('data-drop2-id')}']`).prop('selected', false);
+                        } else {
                             $($el).find(`option[data-drop2-id='${$(this).attr('data-drop2-id')}']`).prop('selected', true);
                         }
                         $el.trigger('drop2:select');
                         output.update($el)
                     })
-                   
                 })
-
             },
 
             'update': function ($el) {
@@ -81,7 +83,9 @@
                         $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).attr('drop-selected', true)
                     } else {
                         $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).attr('drop-selected', false);
-                        $($el).next(`.drop-container`).find(`.drop-header`).text($el.val())
+                        if ($el.attr('multiple') != 'multiple') {
+                            $($el).next(`.drop-container`).find(`.drop-header`).text($el.val())
+                        }
                     }
                 })
             },
