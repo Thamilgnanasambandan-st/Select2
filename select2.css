@@ -1,8 +1,8 @@
 :root {
     --theme: #fff;
-    --text: hsl(0, 0%, 0%); 
+    --text: 0,0,0; 
   }
-  .select2-dropdown{
+  .drop-container{
     color: var(--text);
     background-color: var(--theme);
     position: relative;
@@ -11,24 +11,45 @@
 .placeholder-icon{
     margin-right: 10px;
 }
-.select2-header{
+.drop-header{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
     padding: 5px 10px;
     border: 1px solid;
-    border-color: rgba(var(--text), 0.2);
+    border-color: rgba(var(--text), 0.8);
     cursor: pointer;
+    font-weight: 500;
 }
-.select2-header:has(.placeholder-icon){
+.drop-header:has(.placeholder-icon){
     padding-left: 8px;
 }
-.select2-body{
-  display: none;
+.drop-body{
   position: absolute;
   top: 36px;
   border-color: rgba(var(--text), 0.2);
-  padding: 5px 10px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
   min-width: 100%;
+ 
+}
+.drop-body ul li{
+  padding: 5px 10px;
+}
+.drop-body ul li:hover{
+  background-color: #5897fb;
+  cursor: pointer;
+  color: #fff;
+}
+[drop-selected='true']{
+  background: #ddd;
+}
+.drop-body[drop-render='hide']{
+  display: none;
+}
+.drop-body[drop-render='show']{
+  display: block;
+}
+.multiselect-drop .drop-header{
+  color: rgba(var(--text), 0.5);
+  font-weight: normal;
 }

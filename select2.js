@@ -1,88 +1,103 @@
 (function ($) {
 
     // Plugin definition.
-    $.fn.select2 = function (options) {
+    $.fn.drop2 = function (options) {
         var $jq = this;
         // Iterate and reformat each matched element.
         var conditions = $.extend({
             hide: function (component) {
+                component.next(`.drop-container`).find(`.drop-body`).attr('drop-render', 'hide');
+                component.trigger('drop2:close');
             },
             show: function (component) {
-                component.find('.select2-body').show();
+                component.next(`.drop-container`).find(`.drop-body`).attr('drop-render', 'show')
+                component.trigger('drop2:open');
             },
             toggle: function (component) {
-                
-                component.find(`.select2-header`).on('click',function(){
-                    component.children(`.select2-body`).toggle();
+                component.next(`.drop-container`).find(`.drop-header`).on('click', function () {
+                    if (component.next(`.drop-container`).find(`.drop-body`).attr("drop-render") == 'hide') {
+                        component.trigger('drop2:opening');
+                        setTimeout(function () {
+                            conditions.show(component)
+                        }, 300);
+
+                    } else {
+                        component.trigger('drop2:closing');
+                        conditions.hide(component)
+                    }
                 })
             },
-            dataType: "",
-            dataSearch: function($element){
-                console.log($element)
-                var search_filed = $element.find(`input[name="search"]`)
-                
-                var list_elements = $element.find(`.select-options`)
-               
-                $(search_filed).on('input', function() {
-                    var searchTerm = $(this).val().toLowerCase(); // Get the search term and convert it to lowercase
-                
-                    // Filter the list items based on the search term
-                    $(list_elements).each(function() {
-                      var text = $(this).text().toLowerCase(); // Get the text content of each list item and convert it to lowercase
-                      if (text.indexOf(searchTerm) === -1) { // If the search term is not found in the text
-                        $(this).hide(); // Hide the list item
-                      } else {
-                        $(this).show(); // Show the list item
-                      }
-                    });
-                  });
-            },
-            renderData: function ($element) {
-                $element.find(`.placeholder-icon`).html(`<i class="fa-solid fa-magnifying-glass"></i>`);
-                var inputType = conditions.dataType;
-                var body_content = $element.find('.select2-body');
-                obj = { one: 'Apple', two: 'American', three: 'Orange', four: 'Banana', five: 'Strawberry', six: 'Grape', seven: 'multinational', eight: 'computer', nine: 'software', ten: 'quantum' };
-                $.each(obj, function (key, value) {
-                    if (inputType == 'checkbox') {
-                        typeofInputs('checkbox',key,value)
-                    }else if(inputType == 'radio'){
-                        typeofInputs('radio',key,value)
-                    }
-                });
-                function typeofInputs(type,key,value){
-                    body_content.append(`<div class='select-options'>
-                    <label class='w-full' for="select-check${key}">
-                    <input type="${type}" id="select-check${key}"  name="customDropdown">
-                    ${value}</label>
-                  </div>`);
-                }
-                if(body_content.children(`.select-options`).length >= 5){
-                    body_content.prepend(`<input type="text" class='border mb-2 px-2' placeholder='Search'  name="search">`)
-                }
-            },
+            dataType: "single",
             placeholderIcons: '<i class="fa-solid fa-magnifying-glass"></i>'
         }, options);
-        
-    
-         var output ={
-             'init': function(){
+
+
+        var output = {
+            'init': function () {
                 $jq.each(function () {
                     var $el = $(this);
+                    output.create($el)
                     conditions.toggle($el)
-                    conditions.renderData($el)
-                    conditions.dataSearch($el)
+                    output.choose($el)
                 })
-             },
-             'get':function(){
-                $jq.each(function () {
-                var $el = $(this).find(`input[name="customDropdown"]:checked`).serialize()
-                console.log($el)
+            },
+            'create': function ($el) {
+                $el.hide()
+                if ($el.val() == '') {
+                    $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>Select Options</div> <div class='drop-body' drop-render='hide'><ul></ul></div></div>`)
+                } else {
+                    $el.after(`<div class='drop-container'><div class='drop-header'>${$el.val()}</div> <div class='drop-body' drop-render='hide'><ul></ul></div></div>`)
+                }
+                $($el).children('option').each(function (index, val) {
+                    $(this).attr("data-drop2-id", `${index}`);
+                    $($el).next(`.drop-container`).find(`.drop-body ul`).append(`<li data-drop2-id='${index}' drop-selected='false'>${$(this).text()}</li>`)
+                });
+            },
+            'choose': function ($el) {
+                var select_data = $($el).next(`.drop-container`).find(`.drop-body ul li`)
+                var selected_data = $($el).children("option:selected").attr('data-drop2-id')
+                $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).prop('drop-selected', true)
+                $(select_data).each(function (index, val) {
+                    $(this).on('click', function () {
+                        $el.trigger('drop2:selecting');
+                        console.log($(this).attr('drop-selected'))
+                        if($el.attr('multiple')=='multiple' && $(this).attr('drop-selected') == 'true'){
+                            $($el).find(`option[data-drop2-id='${$(this).attr('data-drop2-id')}']`).prop('selected', false);
+                        }else{
+                            $($el).find(`option[data-drop2-id='${$(this).attr('data-drop2-id')}']`).prop('selected', true);
+                        }
+                        $el.trigger('drop2:select');
+                        slectedOptions();
+                    })
+                    function slectedOptions() {
+                        $($el).children("option").each(function () {
+                            selected_data = $(this).attr('data-drop2-id')
+                            if ($(this).is(':selected')) {
+                                $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).attr('drop-selected', true)
+                            } else {
+                                $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).attr('drop-selected', false)
+                            }
+                        })
+                    }
                 })
-             }
-         }
 
-         output.init();
-         return output;
+            },
+
+            'update': function () {
+
+            },
+            'destroy': function () {
+
+            },
+            'get': function () {
+                $jq.each(function () {
+                    var $el = $(this).find(`input[name="customDropdown"]:checked`).serialize()
+                })
+            }
+        }
+
+        output.init();
+        return output;
 
     };
 

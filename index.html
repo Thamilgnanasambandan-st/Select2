@@ -15,43 +15,54 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="/select2.css" />
     <script src="/select2.js"></script>
-
 </head>
 
 <body>
     <div class="flex w-full items-center justify-center pt-10">
         <div>
-            <p class="mb-3">This is checkbox</p>
-        <div class="select2-dropdown  mr-28" id="test-1">
-            <div class="px-5 py-1 select2-header">
-                <div class="placeholder-icon"></div>
-                <div>Select checkbox</div>
-            </div>
-            <div class="select2-body"></div>
+            <p class="mb-3">This is Multislect</p>
+            <select name="cars" id="cars" multiple>
+                <option value="volvo">Volvo-1</option>
+                <option value="saab">Saab-1</option>
+                <option value="opel">Opel-1</option>
+                <option value="audi">Audi-1</option>
+            </select>
         </div>
-    </div>
-    <div>
-        <p class="mb-3">This is radio</p>
-        <div class="select2-dropdown  " id="test-2">
-            <div class="px-5 py-1 select2-header">
-                <div class="placeholder-icon"></div>
-                <div>Select Radio</div>
-            </div>
-            <div class="select2-body"></div>
+        <div class="ml-10">
+            <p class="mb-3">This is Single select</p>
+            <select name="cars" class="car">
+                <option value="volvo">Volvo-2</option>
+                <option value="saab">Saab-2</option>
+                <option value="opel">Opel-2</option>
+                <option value="audi">Audi-2</option>
+            </select>
         </div>
-    </div>
+        <div class="ml-10">
+            <p class="mb-3">This is Single select</p>
+            <select name="cars" data-drop="car">
+                <option value="volvo">Volvo-3</option>
+                <option value="saab">Saab-3</option>
+                <option value="opel">Opel-3</option>
+                <option value="audi">Audi-3</option>
+            </select>
+        </div>
     </div>
     <script>
         $(function () {
-          var x =  $('#test-1').select2({
-                dataType: 'checkbox'
+            $('#cars').drop2();
+            $('.car').drop2();
+            $('[data-drop="car"]').drop2({
+                create: function ($el) {
+                    console.log("sdgh");
+                }
+            });
+            $('#cars').on('drop2:select', function () {
+                // alert('select')
             })
-            $('#test-2').select2({
-                dataType: 'radio'
+            $('#cars').on('hidden.hub.drop2', function () {
+                alert('close')
             })
-           
         });
-
     </script>
 </body>
 
