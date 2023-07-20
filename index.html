@@ -21,7 +21,7 @@
     <div class="flex w-full items-center justify-center pt-10">
         <div>
             <p class="mb-3">This is Multislect</p>
-            <select name="cars" id="cars" multiple>
+            <select name="cars" id="car" multiple>
                 <option >Volvo-1</option>
                 <option >Saab-1</option>
                 <option >Opel-1</option>
@@ -61,7 +61,7 @@
     </div>
     <script>
         $(function () {
-            $('#cars').drop2();
+            $('#car').drop2();
             $('.car').drop2();
             $('[data-drop="car"]').drop2({
                 create: function ($el) {
