@@ -2,16 +2,19 @@
 
     // Plugin definition.
     $.fn.drop2 = function (options) {
-        var $jq = this;
+        var $jq = this,
+            isMultiple = $jq.attr('multiple');
         var $el, $select_options, $drop2_container, $drop2_head, $drop2_body, $drop2_list_body, $drop2_list = '';
 
-        var settings = $.extend({}, options);
+        var settings = $.extend({
+
+        }, options);
 
 
         var methods = {
             init: function () {
                 $el = $jq
-                $el.hide()
+                // $el.hide()
                 if ($el.attr('multiple') == 'multiple') {
                     $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>Select Options</div> <div class='drop-body' drop-render='hide'><ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='deop-select'>submit</a></div></div></div>`)
                 } else {
@@ -21,15 +24,9 @@
                 $drop2_body = $jq.next(`.drop-container`).find(`.drop-body`)
                 $drop2_list_body = $($el).next(`.drop-container`).find(`.drop-body ul`)
                 $drop2_head = $el.next(`.drop-container`).find(`.drop-header`)
-                $select_options.each(function (index, val) {
-                    $(this).attr("data-drop2-id", `${index}`);
-                    if ($(this).is(':selected')) {
-                        $drop2_list_body.append(`<li data-drop2-id='${index}' drop-selected='true'>${$(this).text()}</li>`)
-                    } else {
-                        $drop2_list_body.append(`<li data-drop2-id='${index}' drop-selected='false'>${$(this).text()}</li>`)
-                    }
-
-                });
+                
+                
+                methods.updateList();
                 $drop2_head.on('click', function () {
                     if ($drop2_body.attr("drop-render") == 'hide') {
                         setTimeout(function () {
@@ -43,21 +40,22 @@
 
                 $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
                 var selected_data = $($el).children("option:selected").attr('data-drop2-id')
-                $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).prop('drop-selected', true)
-                $($drop2_list).each(function (index, val) {
-                    $(this).on('click', function () {
-                        if ($el.attr('multiple') == 'multiple' && $(this).attr('drop-selected') == 'true') {
-                            $($el).find(`option[data-drop2-id='${$(this).attr('data-drop2-id')}']`).prop('selected', false);
-                        } else {
-                            $($el).find(`option[data-drop2-id='${$(this).attr('data-drop2-id')}']`).prop('selected', true);
-                        }
-                        $el.trigger('drop2:select');
-                        methods.update()
-                    })
-                })
-
+                $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).prop('drop-selected', true);
+                
             },
+            updateList: function(){
+                $drop2_list_body.html(' ');
+                $select_options.each(function (index) {
+                    $(this).attr("data-drop2-id", `${index}`);
+                    if ($(this).is(':selected')) {
+                        $drop2_list_body.append(`<li data-drop2-id='${index}' data-key='${$(this).val()}' drop-selected='true'>${$(this).text()}</li>`)
+                    } else {
+                        $drop2_list_body.append(`<li data-drop2-id='${index}' data-key='${$(this).val()}' drop-selected='false'>${$(this).text()}</li>`)
+                    }
 
+                });
+                clickOption();
+            },
             show: function () {
                 $drop2_body.attr('drop-render', 'show')
             },
@@ -66,29 +64,67 @@
                 $drop2_body.attr('drop-render', 'hide')
             },
 
-            update: function () {
-                $select_options.each(function () {
-                    $el = $jq
-                    selected_data = $(this).attr('data-drop2-id');
-                    if ($(this).is(':selected')) {
-                        $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).attr('drop-selected', true)
-                    } else {
-                        $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).attr('drop-selected', false);
-                        if ($el.attr('multiple') != 'multiple') {
-                            $($el).next(`.drop-container`).find(`.drop-header`).text($el.val())
-                        }
-                    }
-                })
+            selected: function () {
             }
 
             // Add more methods as needed...
         };
-
+function listSelected(target, condition){
+    if(isMultiple){
+        if(condition === 'true'){
+            target.attr('drop-selected', 'false');
+        }
+        else{
+            target.attr('drop-selected', 'true');
+        }
+    }
+    else{
+        $el.next().find('[data-drop2-id]').attr('drop-selected', 'false');
+        target.attr('drop-selected', 'true');
+    }
+    
+}
+function removeStringFromArray(key, array){
+    let removeString =jQuery.grep(array, function(value) {
+        console.log(value)
+        return value != key;
+      });
+      return removeString;
+}
+function addStringToArray(key, array){
+        let arrayList =  array;
+        let addString = arrayList.push(key);
+        return arrayList;
+}
+function clickOption(){
+    $jq.next().find('[data-drop2-id]').on('click', function() {
+        console.log("dsh");
+        let currentListSelected = $(this).attr('drop-selected');
+        listSelected($(this), currentListSelected)
+        if(currentListSelected === 'true'){
+            if(isMultiple){
+                let aa =removeStringFromArray($(this).attr('data-key'),$jq.val());
+                $jq.val(aa).change();
+            }
+        }
+        else{
+            if(isMultiple){
+                let bb = addStringToArray($(this).attr('data-key'),$jq.val());
+                $jq.val(bb).change();
+            }
+            else{
+                $jq.val($(this).attr('data-key')).change();
+            }
+        }
+        methods.selected();
+    })
+}
 
         return this.each(function () {
 
             var $el = $(this);
             if (methods[options]) {
+
                 $select_options = $($el).children('option')
                 $drop2_body = $jq.next(`.drop-container`).find(`.drop-body`)
                 $drop2_list_body = $($el).next(`.drop-container`).find(`.drop-body ul`)
