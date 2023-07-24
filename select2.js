@@ -16,7 +16,7 @@
                 $el = $jq
                 // $el.hide()
                 if ($el.attr('multiple') == 'multiple') {
-                    $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>Select Options</div> <div class='drop-body' drop-render='hide'><ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='deop-select'>submit</a></div></div></div>`)
+                    $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>Select Options</div> <div class='drop-body' drop-render='hide'><ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div></div></div>`)
                 } else {
                     $el.after(`<div class='drop-container'><div class='drop-header'>${$el.val()}</div> <div class='drop-body' drop-render='hide'><ul></ul></div></div>`)
                 }
@@ -56,6 +56,33 @@
             },
             show: function () {
                 $drop2_body.attr('drop-render', 'show')
+                if($drop2_body.attr('drop-render','show')){
+                   var x = 0;
+                   
+                    $(document).keydown(function (event) {
+                        if (event.keyCode === 40 && $drop2_list.length > x) {
+                       console.log(x)
+                        $($el).next(`.drop-container`).find(`li[data-drop2-id="${x}"]`).addClass(`drop-hover`);
+                        $($el).next(`.drop-container`).find(`li[data-drop2-id="${x}"]`).siblings(`.drop-hover`).removeClass(`drop-hover`);
+                        if(x > 6){
+                           
+                            $drop2_list_body.scrollTop(y);
+                        }
+                        x = x+1;
+
+                        }
+                    if (event.keyCode === 38) {
+                       if($drop2_list_body.find(".drop-hover").attr('data-drop2-id')!= undefined){
+                          x = $drop2_list_body.find(".drop-hover").attr('data-drop2-id') ;
+                          $($el).next(`.drop-container`).find(`li[data-drop2-id="${x-1}"]`).addClass(`drop-hover`);
+                          $($el).next(`.drop-container`).find(`li[data-drop2-id="${x-1}"]`).siblings(`.drop-hover`).removeClass(`drop-hover`);
+                       }
+                        
+                        
+                    }
+                    })
+
+                   }
             },
 
             hide: function () {
@@ -115,6 +142,7 @@
                 }
                 methods.selected();
             })
+         
         }
 
         return this.each(function () {

@@ -57,13 +57,18 @@
   text-align: center;
 
 }
-.deop-select{
+.drop-select{
   background-color: #5897fb;
   padding: 2px 8px;
   cursor: pointer;
   color: #fff;
   border-radius: 4px;
   width: 62px;
+}
+.drop-hover{
+  background-color: #5896fb9f;
+  cursor: pointer;
+  color: #fff;
 }
 .drop-body ul li:hover{
   background-color: #5897fb;
