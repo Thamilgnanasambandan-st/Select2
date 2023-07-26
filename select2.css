@@ -11,6 +11,11 @@
 .placeholder-icon{
     margin-right: 10px;
 }
+
+.drop2-select{
+  width: 1px;
+  height: 1px;
+}
 .drop-header{
     display: flex;
     align-items: center;
@@ -33,7 +38,7 @@
  
 }
 .drop-body ul{
-  max-height: 200px;
+  max-height: 204px;
   overflow: auto;
 }
 .drop-body ul li{
@@ -66,10 +71,11 @@
   width: 62px;
 }
 .drop-hover{
-  background-color: #5896fb9f;
+  background-color: #5896fb9f !important;
   cursor: pointer;
   color: #fff;
 }
+
 .drop-body ul li:hover{
   background-color: #5897fb;
   cursor: pointer;

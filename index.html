@@ -23,7 +23,7 @@
             <p class="mb-3">This is Multislect</p>
             <select name="cars" id="car" multiple>
                 <option value="v1" >Volvo-1</option>
-                <option value="s1" >Saab-1</option>
+                <option value="s1" selected>Saab-1</option>
                 <option value="o1" >Opel-1</option>
                 <option value="a1" >Audi-1</option>
                 <option value="v2" >Volvo-1</option>
@@ -43,10 +43,22 @@
         <div class="ml-10">
             <p class="mb-3">This is Single select</p>
             <select name="cars" class="car">
-                <option >Volvo-2</option>
-                <option selected>Saab-2</option>
-                <option >Opel-2</option>
-                <option>Audi-2</option>
+                <option value="v1" >Volvo-1</option>
+                <option value="s1" selected>Saab-1</option>
+                <option value="o1" >Opel-1</option>
+                <option value="a1" >Audi-1</option>
+                <option value="v2" >Volvo-1</option>
+                <option value="s2" >Saab-1</option>
+                <option value="o2" >Opel-1</option>
+                <option value="a3" >Audi-1</option>
+                <option value="v3" >Volvo-1</option>
+                <option value="s4" >Saab-1</option>
+                <option value="o4" >Opel-1</option>
+                <option value="a5" >Audi-1</option>
+                <option value="v5" >Volvo-1</option>
+                <option value="s5" >Saab-1</option>
+                <option value="o6" >Opel-1</option>
+                <option value="a6" >Audi-1</option>
             </select>
         </div>
         <div class="ml-10">
@@ -65,8 +77,8 @@
             $('.car').drop2();
             $('[data-drop="car"]').drop2();
         });
-        $('#car').on('change', function(){
-            console.log($(this).val())
+        $('#car,.car').on('change', function(){
+          console.log($(this).val())
         })
     </script>
 </body>
