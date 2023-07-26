@@ -54,6 +54,7 @@
             },
             updateList: function () {
                 $drop2_list_body.html(' ');
+                $drop2_list_body.css('opacity',0);
                 $select_options.each(function (index) {
                     $(this).attr("data-drop2-id", `${index}`);
                     if ($(this).is(':selected')) {
@@ -61,7 +62,6 @@
                     } else {
                         $drop2_list_body.append(`<li data-drop2-id='${index}' data-key='${$(this).val()}' drop-selected='false'>${$(this).text()}</li>`)
                     }
-
                 });
 
                 $jq.next().find('[data-drop2-id]').on('click', function () {
@@ -73,6 +73,7 @@
                 $drop2_list_body.scrollTop(0);
                 $drop2_list_body.find(`.drop-hover`).removeClass('drop-hover');
                 x = 0;
+                dropdownHeight($drop2_list_body)
             },
 
             hide: function () {
@@ -85,7 +86,25 @@
 
             // Add more methods as needed...
         };
+        function dropdownHeight(targetList){
+            let c = 0;
+            let he =0;
+            targetList.find('li').each(function() {
+                c++;
+                if(c <= 5){
+                    he = he+ $(this).outerHeight();
+                }
+                else if(c === 6){
+                    he =  he+  ($(this).outerHeight() / 2);
+                }
+                
+            })
+            targetList.css({
+                'max-height': he+'px',
+                'opacity': 1,
+            });
 
+        }
         function keyEvents() {
 
             $drop2_body.find(`.drop-cancel`).on('click', function () {
@@ -97,8 +116,8 @@
                     if (event.keyCode === 40 && $drop2_list.length > x) {
                         $($el).next(`.drop-container`).find(`li[data-drop2-id="${x}"]`).addClass(`drop-hover`);
                         $($el).next(`.drop-container`).find(`li[data-drop2-id="${x}"]`).siblings(`.drop-hover`).removeClass(`drop-hover`);
-                        if (x > 5) {
-                            $drop2_list_body.scrollTop(35 * (x - 5));
+                        if (x > 4) {
+                            $drop2_list_body.scrollTop(34 * (x - 4));
                         }
                         if (x == $drop2_list.length) {
                             x = $drop2_list.length
@@ -112,7 +131,7 @@
                                 x = x - 1;
                                 $($el).next(`.drop-container`).find(`li[data-drop2-id="${x}"]`).addClass(`drop-hover`);
                                 $($el).next(`.drop-container`).find(`li[data-drop2-id="${x}"]`).siblings(`.drop-hover`).removeClass(`drop-hover`);
-                                $drop2_list_body.scrollTop(34 * (x - 5));
+                                $drop2_list_body.scrollTop(34 * (x - 4));
                             }
                         }
 
