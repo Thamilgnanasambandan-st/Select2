@@ -16,16 +16,24 @@
             init: function () {
                 $el = $jq
                 $el.addClass(`drop2-select`)
+
+                // Create drop conatiner and header
                 if ($el.attr('multiple') == 'multiple') {
                     $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>Select Options</div> <div class='drop-body' drop-render='hide'><ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div></div>`)
                 } else {
                     $el.after(`<div class='drop-container'><div class='drop-header'>${$el.val()}</div> <div class='drop-body' drop-render='hide'><ul></ul></div></div>`)
                 }
+
+                // assign variables and names
                 $select_options = $($el).children('option')
                 $drop2_body = $jq.next(`.drop-container`).find(`.drop-body`)
                 $drop2_list_body = $($el).next(`.drop-container`).find(`.drop-body ul`)
                 $drop2_head = $el.next(`.drop-container`).find(`.drop-header`)
+
+                //Crate drop list 
                 methods.updateList();
+
+                //Open drop while click header
                 $drop2_head.on('click', function () {
                     if ($drop2_body.attr("drop-render") == 'hide') {
                         setTimeout(function () {
@@ -37,11 +45,15 @@
                         methods.hide()
                     }
                 })
+
+                // Select option default selected 
                 $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
                 var selected_data = $($el).children("option:selected").attr('data-drop2-id')
                 $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).prop('drop-selected', true);
 
+                // Create events and functionality 
                 keyEvents()
+
                 // Close dropdown while click outside
                 $(document).on("click", function (event) {
                     var $trigger = $jq.next()
@@ -50,11 +62,12 @@
                     }
                 })
 
-
             },
+
+            //Crate drop list 
             updateList: function () {
                 $drop2_list_body.html(' ');
-                $drop2_list_body.css('opacity',0);
+                $drop2_list_body.css('opacity', 0);
                 $select_options.each(function (index) {
                     $(this).attr("data-drop2-id", `${index}`);
                     if ($(this).is(':selected')) {
@@ -68,6 +81,8 @@
                     clickOption($(this));
                 })
             },
+
+            // Show methods
             show: function () {
                 $drop2_body.attr('drop-render', 'show');
                 $drop2_list_body.scrollTop(0);
@@ -75,7 +90,7 @@
                 x = 0;
                 dropdownHeight($drop2_list_body)
             },
-
+            // Hide methods
             hide: function () {
 
                 $drop2_body.attr('drop-render', 'hide')
@@ -86,21 +101,21 @@
 
             // Add more methods as needed...
         };
-        function dropdownHeight(targetList){
+        function dropdownHeight(targetList) {
             let c = 0;
-            let he =0;
-            targetList.find('li').each(function() {
+            let he = 0;
+            targetList.find('li').each(function () {
                 c++;
-                if(c <= 5){
-                    he = he+ $(this).outerHeight();
+                if (c <= 5) {
+                    he = he + $(this).outerHeight();
                 }
-                else if(c === 6){
-                    he =  he+  ($(this).outerHeight() / 2);
+                else if (c === 6) {
+                    he = he + ($(this).outerHeight() / 2);
                 }
-                
+
             })
             targetList.css({
-                'max-height': he+'px',
+                'max-height': he + 'px',
                 'opacity': 1,
             });
 
@@ -162,31 +177,17 @@
             }
 
         }
-        // function removeStringFromArray(key, array) {
-        //     let removeString = jQuery.grep(array, function (value) {
-        //         return value != key;
-        //     });
-        //     return removeString;
-        // }
-        // function addStringToArray(key, array) {
-        //     let arrayList = array;
-        //      arrayList.push(key);
-        //     return arrayList;
-        // }
+
         function clickOption(target) {
             let currentListSelected = target.attr('drop-selected');
             listSelected(target, currentListSelected)
             if (currentListSelected === 'true') {
                 if (isMultiple) {
-                    // let aa = removeStringFromArray(target.attr('data-key'), $jq.val());
-                    // $jq.val(aa).change();
                     selected = selected.filter(num => num != target.attr('data-key'));
                 }
             }
             else {
                 if (isMultiple) {
-                    // let bb = addStringToArray(target.attr('data-key'), $jq.val());
-                    // $jq.val(bb).change();
                     selected.push(target.attr('data-key'))
                     selected = [...new Set(selected.concat($jq.val()))]
 
@@ -200,7 +201,6 @@
             }
             if (isMultiple) {
                 $drop2_body.find(`.drop-select`).on('click', function () {
-                    //  selected = selected.concat($jq.val())
                     $jq.val(selected).change();
                     methods.hide()
 
