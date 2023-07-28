@@ -8,6 +8,7 @@
         let selected = [];
         let x = 0;
         var settings = $.extend({
+            options: 5
 
         }, options);
 
@@ -19,7 +20,8 @@
 
                 // Create drop conatiner and header
                 if ($el.attr('multiple') == 'multiple') {
-                    $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>Select Options</div> <div class='drop-body' drop-render='hide'><ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div></div>`)
+                    $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>Select Options</div> <div class='drop-body' drop-render='hide'><div><input type="text" placeholder="Search" data-search=""></div> <ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div></div>`)
+
                 } else {
                     $el.after(`<div class='drop-container'><div class='drop-header'>${$el.val()}</div> <div class='drop-body' drop-render='hide'><ul></ul></div></div>`)
                 }
@@ -32,6 +34,8 @@
 
                 //Crate drop list 
                 methods.updateList();
+
+                searchOptions($drop2_body)
 
                 //Open drop while click header
                 $drop2_head.on('click', function () {
@@ -104,13 +108,15 @@
         function dropdownHeight(targetList) {
             let c = 0;
             let he = 0;
+            console.log(settings.options)
             targetList.find('li').each(function () {
                 c++;
-                if (c <= 5) {
+                if (c <= settings.options) {
                     he = he + $(this).outerHeight();
                 }
-                else if (c === 6) {
+                else if (c === (settings.options + 1)) {
                     he = he + ($(this).outerHeight() / 2);
+
                 }
 
             })
@@ -120,6 +126,24 @@
             });
 
         }
+
+        function searchOptions(target) {
+
+            target.find('[data-search]').on('keyup', function () {
+                console.log($(this))
+                var searchTerm = $(this).val().toLowerCase();
+                target.find(`ul li`).each(function () {
+                    var text = $(this).text().toLowerCase(); // Get the text content of each list item and convert it to lowercase
+                    if (text.indexOf(searchTerm) === -1) { // If the search term is not found in the text
+                        $(this).hide(); // Hide the list item
+                    } else {
+                        $(this).show(); // Show the list item
+                    }
+                });
+            });
+
+        }
+
         function keyEvents() {
 
             $drop2_body.find(`.drop-cancel`).on('click', function () {
@@ -129,10 +153,12 @@
             $(document).on("keydown", function (event) {
                 if ($drop2_body.attr('drop-render') == 'show') {
                     if (event.keyCode === 40 && $drop2_list.length > x) {
+
                         $($el).next(`.drop-container`).find(`li[data-drop2-id="${x}"]`).addClass(`drop-hover`);
                         $($el).next(`.drop-container`).find(`li[data-drop2-id="${x}"]`).siblings(`.drop-hover`).removeClass(`drop-hover`);
-                        if (x > 4) {
-                            $drop2_list_body.scrollTop(34 * (x - 4));
+                        
+                        if (x > (settings.options - 1)) {
+                            $drop2_list_body.scrollTop(34 * (x - (settings.options - 1)));
                         }
                         if (x == $drop2_list.length) {
                             x = $drop2_list.length
@@ -146,7 +172,7 @@
                                 x = x - 1;
                                 $($el).next(`.drop-container`).find(`li[data-drop2-id="${x}"]`).addClass(`drop-hover`);
                                 $($el).next(`.drop-container`).find(`li[data-drop2-id="${x}"]`).siblings(`.drop-hover`).removeClass(`drop-hover`);
-                                $drop2_list_body.scrollTop(34 * (x - 4));
+                                $drop2_list_body.scrollTop(34 * (x - (settings.options - 1)));
                             }
                         }
 
@@ -161,6 +187,8 @@
 
 
         }
+
+
 
         function listSelected(target, condition) {
             if (isMultiple) {
