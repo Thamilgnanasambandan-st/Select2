@@ -42,7 +42,7 @@
         </div>
         <div class="ml-10">
             <p class="mb-3">This is Single select</p>
-            <select name="cars" class="car">
+            <select name="cars" class="car" id="demo2">
                 <option value="v1" >Volvo-1</option>
                 <option value="s1" selected>Saab-1</option>
                 <option value="o1" >Opel-1</option>
@@ -63,7 +63,7 @@
         </div>
         <div class="ml-10">
             <p class="mb-3">This is Single select</p>
-            <select name="cars" data-drop="car">
+            <select name="cars" data-drop="car" id="demo3">
                 <option >Volvo-3</option>
                 <option >Saab-3</option>
                 <option >Opel-3</option>
@@ -75,7 +75,9 @@
         $(function () {
             $('#car').drop2();
             $('.car').drop2();
-            $('[data-drop="car"]').drop2();
+            $('[data-drop="car"]').drop2({
+                searchMin: 2
+            });
         });
         $('#car,.car').on('change', function(){
           console.log($(this).val())
