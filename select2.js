@@ -4,11 +4,12 @@
     $.fn.drop2 = function (options) {
         var $jq = this,
             isMultiple = $jq.attr('multiple');
-        var $el, $select_options, $drop2_container, $drop2_head, $drop2_body, $drop2_list_body, $drop2_list = '';
+        var $el, $select_options, $drop2_container, $drop2_head, $drop2_body, $drop2_list_body, $drop2_list, $drop2_search = '';
         let selected = [];
         let x = 0;
         var settings = $.extend({
-            options: 5
+            options: 5,
+            searchMin: 5
 
         }, options);
 
@@ -20,7 +21,7 @@
 
                 // Create drop conatiner and header
                 if ($el.attr('multiple') == 'multiple') {
-                    $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>Select Options</div> <div class='drop-body' drop-render='hide'><div><input type="text" placeholder="Search" data-search=""></div> <ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div></div>`)
+                    $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>Select Options</div> <div class='drop-body' drop-render='hide'><ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div></div>`)
 
                 } else {
                     $el.after(`<div class='drop-container'><div class='drop-header'>${$el.val()}</div> <div class='drop-body' drop-render='hide'><ul></ul></div></div>`)
@@ -72,6 +73,12 @@
             updateList: function () {
                 $drop2_list_body.html(' ');
                 $drop2_list_body.css('opacity', 0);
+                if($select_options.length >= settings.searchMin  ){
+                    $drop2_body.prepend('<div><input type="text" placeholder="Search" data-search=""></div> ')
+                }
+                //To declare the search element start
+                $drop2_search = $drop2_body.find('[data-search]');
+                //To declare the search element end
                 $select_options.each(function (index) {
                     $(this).attr("data-drop2-id", `${index}`);
                     if ($(this).is(':selected')) {
@@ -89,6 +96,8 @@
             // Show methods
             show: function () {
                 $drop2_body.attr('drop-render', 'show');
+               
+                $drop2_search.focus();
                 $drop2_list_body.scrollTop(0);
                 $drop2_list_body.find(`.drop-hover`).removeClass('drop-hover');
                 x = 0;
@@ -108,7 +117,7 @@
         function dropdownHeight(targetList) {
             let c = 0;
             let he = 0;
-            console.log(settings.options)
+   
             targetList.find('li').each(function () {
                 c++;
                 if (c <= settings.options) {
@@ -130,7 +139,7 @@
         function searchOptions(target) {
 
             target.find('[data-search]').on('keyup', function () {
-                console.log($(this))
+       
                 var searchTerm = $(this).val().toLowerCase();
                 target.find(`ul li`).each(function () {
                     var text = $(this).text().toLowerCase(); // Get the text content of each list item and convert it to lowercase
@@ -153,6 +162,7 @@
             $(document).on("keydown", function (event) {
                 if ($drop2_body.attr('drop-render') == 'show') {
                     if (event.keyCode === 40 && $drop2_list.length > x) {
+            
 
                         $($el).next(`.drop-container`).find(`li[data-drop2-id="${x}"]`).addClass(`drop-hover`);
                         $($el).next(`.drop-container`).find(`li[data-drop2-id="${x}"]`).siblings(`.drop-hover`).removeClass(`drop-hover`);
