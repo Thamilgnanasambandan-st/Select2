@@ -78,10 +78,14 @@
             $('[data-drop="car"]').drop2({
                 searchMin: 2
             });
+
+            $(document).on('drop2-select-submitted', '#car', function(){
+                console.log('trigerrred - S');
+                console.log($('#car').val());
+                console.log('trigerrred - E');
+            })
         });
-        $('#car,.car').on('change', function(){
-          console.log($(this).val())
-        })
+      
     </script>
 </body>
 

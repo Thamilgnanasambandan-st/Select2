@@ -6,6 +6,8 @@
             isMultiple = $jq.attr('multiple');
         var $el, $select_options, $drop2_container, $drop2_head, $drop2_body, $drop2_list_body, $drop2_list, $drop2_search = '';
         let selected = [];
+        let selectedOld = [];
+        let selectedNew = [];
         var settings = $.extend({
             options: 5,
             searchMin: 5
@@ -97,6 +99,7 @@
             // Show methods
             show: function () {
                 $drop2_body.attr('drop-render', 'show');
+                selectedOld = $el.val();
                 $drop2_search.focus();
                 $drop2_list_body.scrollTop(0);
                 createIndex()
@@ -104,11 +107,12 @@
             },
             // Hide methods
             hide: function () {
-
-                $drop2_body.attr('drop-render', 'hide')
+                $drop2_body.attr('drop-render', 'hide');
+                selectedOld = [];
             },
 
             selected: function () {
+                
             }
 
             // Add more methods as needed...
@@ -202,27 +206,45 @@
                 }
             })
 
+             if(isMultiple){
+                $drop2_body.find(`.drop-select`).on('click', function () {
+                    $jq.val(selected).change();
+                    methods.hide();
+                    methods.selected();
+                    $el.trigger('drop2-select-submitted');
+                })
+                $drop2_body.find(`.drop-cancel`).on('click', function () {
+                    let difference = selected.filter(x => !$jq.val().includes(x));
+                    difference.forEach(num => {
+                        var a = $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected')
+                        $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected', !a)
+                    });
+                    selected = $jq.val()
+                    selected.forEach(num => $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected', 'true'))
+                    methods.hide()
+    
+                })
+             }
+           
+
 
         }
 
 
 
         function listSelected(target, condition) {
-            if (isMultiple) {
-                if (condition === 'true') {
+            isMultiple ? '':$el.next().find('[data-drop2-id]').attr('drop-selected', 'false');
+            if (isMultiple && (condition === 'true')) {
                     target.attr('drop-selected', 'false');
-                }
-                else {
-                    target.attr('drop-selected', 'true');
-                }
             }
             else {
-                $el.next().find('[data-drop2-id]').attr('drop-selected', 'false');
                 target.attr('drop-selected', 'true');
             }
 
         }
-
+        function confirmChooseOption(target){
+            
+        }
         function clickOption(target) {
             let currentListSelected = target.attr('drop-selected');
             listSelected(target, currentListSelected)
@@ -245,25 +267,9 @@
                 }
             }
             if (isMultiple) {
-                $drop2_body.find(`.drop-select`).on('click', function () {
-                    $jq.val(selected).change();
-                    methods.hide()
-
-                })
-                $drop2_body.find(`.drop-cancel`).on('click', function () {
-                    let difference = selected.filter(x => !$jq.val().includes(x));
-                    difference.forEach(num => {
-                        var a = $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected')
-                        $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected', !a)
-                    });
-                    selected = $jq.val()
-                    selected.forEach(num => $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected', 'true'))
-                    methods.hide()
-
-                })
+            
+               
             }
-
-            methods.selected();
 
         }
 
