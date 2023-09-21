@@ -52,7 +52,7 @@
                     }
                 })
 
-                
+
                 var selected_data = $($el).children("option:selected").attr('data-drop2-id')
                 $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).prop('drop-selected', true);
 
@@ -73,7 +73,7 @@
             updateList: function () {
                 $drop2_list_body.html(' ');
                 $drop2_list_body.css('opacity', 0);
-                if($select_options.length >= settings.searchMin  ){
+                if ($select_options.length >= settings.searchMin) {
                     $drop2_body.prepend('<div><input type="text" placeholder="Search" data-search=""></div> ')
                 }
                 //To declare the search element start
@@ -87,9 +87,9 @@
                         $drop2_list_body.append(`<li data-drop2-id='${index}' data-key='${$(this).val()}' drop-selected='false'>${$(this).text()}</li>`)
                     }
                 });
-                   // Select option default selected 
-                   $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
-                   createIndex('sample');
+                // Select option default selected 
+                $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
+                createIndex('sample');
 
                 $jq.next().find('[data-drop2-id]').on('click', function () {
                     clickOption($(this));
@@ -110,19 +110,18 @@
                 $drop2_body.attr('drop-render', 'hide');
                 selectedOld = [];
             },
-
             selected: function () {
-                
+
             }
 
             // Add more methods as needed...
         };
-        function createIndex(data){
+        function createIndex(data) {
             let count = 0;
             $drop2_list.attr('data-drop2-id', '')
             $drop2_list.removeClass('drop-hover');
-            $drop2_list.each(function(index){
-                if(!$(this).hasClass('hidden')){
+            $drop2_list.each(function (index) {
+                if (!$(this).hasClass('hidden')) {
                     $(this).attr('data-drop2-id', count);
                     count++;
                 }
@@ -132,7 +131,7 @@
         function dropdownHeight(targetList) {
             let c = 0;
             let he = 0;
-   
+
             targetList.find('li').each(function () {
                 c++;
                 if (c <= settings.options) {
@@ -140,10 +139,9 @@
                 }
                 else if (c === (settings.options + 1)) {
                     he = he + ($(this).outerHeight() / 2);
-
                 }
-
             })
+
             targetList.css({
                 'max-height': he + 'px',
                 'opacity': 1,
@@ -152,22 +150,22 @@
         }
 
         function searchOptions(target) {
-
             target.find('[data-search]').on('keyup', function (event) {
-       
                 var searchTerm = $(this).val().toLowerCase();
                 target.find(`ul li`).each(function () {
-                    var text = $(this).text().toLowerCase(); // Get the text content of each list item and convert it to lowercase
-                    if (text.indexOf(searchTerm) === -1) { // If the search term is not found in the text
-                        
-                        $(this).addClass('hidden'); 
+                    var text = $(this).text().toLowerCase();
+                    // Get the text content of each list item and convert it to lowercase
+                    if (text.indexOf(searchTerm) === -1) {
+                        // If the search term is not found in the text
+                        $(this).addClass('hidden');
                         $(this).hide();// Hide the list item
                     } else {
-                        $(this).removeClass('hidden'); 
-                        $(this).show(); // Show the list item
+                        $(this).removeClass('hidden');
+                        // Show the list item
+                        $(this).show();
                     }
                 });
-                if (!((event.keyCode === 40)||(event.keyCode === 38 || event.keyCode === 13 ))) {
+                if (!((event.keyCode === 40) || (event.keyCode === 38 || event.keyCode === 13))) {
                     createIndex('search');
                 }
             });
@@ -183,7 +181,7 @@
             $(document).on("keydown", function (event) {
                 let currentIndex = $drop2_list_body.find('.drop-hover').attr('data-drop2-id');
                 if ($drop2_body.attr('drop-render') == 'show') {
-                    if ((event.keyCode === 40)&&(($drop2_list_body.find('li:not(.hidden)').length)-1) > currentIndex) { //Downarrow
+                    if ((event.keyCode === 40) && (($drop2_list_body.find('li:not(.hidden)').length) - 1) > currentIndex) { //Downarrow
                         console.log("Drop Down", $drop2_list_body.find('li:not(.hidden)').length, currentIndex);
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).removeClass('drop-hover');
                         $drop2_list_body.scrollTop(34 * (currentIndex - (settings.options - 1)));
@@ -191,22 +189,21 @@
                         $drop2_list_body.scrollTop(34 * (currentIndex - (settings.options - 1)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
                     }
-                   else if((event.keyCode === 38)&&(currentIndex > 0)) { //Uparrow
-                    console.log("Drop Up", $drop2_list_body.find('li:not(hidden)').length, currentIndex);
+                    else if ((event.keyCode === 38) && (currentIndex > 0)) { //Uparrow
+                        console.log("Drop Up", $drop2_list_body.find('li:not(hidden)').length, currentIndex);
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).removeClass('drop-hover');
                         currentIndex--;
                         $drop2_list_body.scrollTop(34 * (currentIndex - (settings.options - 1)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
-                    }else 
-                     if (event.keyCode === 13 ) {
-                        var target = $drop2_list_body.find(".drop-hover")
-                       clickOption(target)
-                    }
-
+                    } else
+                        if (event.keyCode === 13) {
+                            var target = $drop2_list_body.find(".drop-hover")
+                            clickOption(target)
+                        }
                 }
             })
 
-             if(isMultiple){
+            if (isMultiple) {
                 $drop2_body.find(`.drop-select`).on('click', function () {
                     $jq.val(selected).change();
                     methods.hide();
@@ -222,29 +219,21 @@
                     selected = $jq.val()
                     selected.forEach(num => $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected', 'true'))
                     methods.hide()
-    
+
                 })
-             }
-           
-
-
+            }
         }
 
-
-
         function listSelected(target, condition) {
-            isMultiple ? '':$el.next().find('[data-drop2-id]').attr('drop-selected', 'false');
+            isMultiple ? '' : $el.next().find('[data-drop2-id]').attr('drop-selected', 'false');
             if (isMultiple && (condition === 'true')) {
-                    target.attr('drop-selected', 'false');
+                target.attr('drop-selected', 'false');
             }
             else {
                 target.attr('drop-selected', 'true');
             }
+        }
 
-        }
-        function confirmChooseOption(target){
-            
-        }
         function clickOption(target) {
             let currentListSelected = target.attr('drop-selected');
             listSelected(target, currentListSelected)
@@ -266,18 +255,12 @@
 
                 }
             }
-            if (isMultiple) {
-            
-               
-            }
-
         }
 
         return this.each(function () {
 
             var $el = $(this);
             if (methods[options]) {
-
                 $select_options = $($el).children('option')
                 $drop2_body = $jq.next(`.drop-container`).find(`.drop-body`)
                 $drop2_list_body = $($el).next(`.drop-container`).find(`.drop-body ul`)
