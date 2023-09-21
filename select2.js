@@ -6,8 +6,6 @@
             isMultiple = $jq.attr('multiple');
         var $el, $select_options, $drop2_container, $drop2_head, $drop2_body, $drop2_list_body, $drop2_list, $drop2_search = '';
         let selected = [];
-        let selectedOld = [];
-        let selectedNew = [];
         var settings = $.extend({
             options: 5,
             searchMin: 5
@@ -99,7 +97,6 @@
             // Show methods
             show: function () {
                 $drop2_body.attr('drop-render', 'show');
-                selectedOld = $el.val();
                 $drop2_search.focus();
                 $drop2_list_body.scrollTop(0);
                 createIndex()
@@ -108,11 +105,7 @@
             // Hide methods
             hide: function () {
                 $drop2_body.attr('drop-render', 'hide');
-                selectedOld = [];
             },
-            selected: function () {
-
-            }
 
             // Add more methods as needed...
         };
@@ -231,6 +224,7 @@
             }
             else {
                 target.attr('drop-selected', 'true');
+                
             }
         }
 
