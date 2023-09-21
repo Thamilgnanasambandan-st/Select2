@@ -76,6 +76,20 @@
   color: #fff;
 }
 
+span.drop2-choice {
+  background-color: #e4e4e4;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin-right: 5px;
+  font-size: 13px;
+  cursor: default;
+}
+.drop2-choice .clear-choice{
+margin-left: 5px;
+cursor: pointer;
+}
+
 .drop-body ul li:hover{
   background-color: #5896fb9f;
   cursor: pointer;
