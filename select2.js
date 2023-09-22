@@ -31,7 +31,7 @@
                 $drop2_body = $jq.next(`.drop-container`).find(`.drop-body`)
                 $drop2_list_body = $($el).next(`.drop-container`).find(`.drop-body ul`)
                 $drop2_head = $el.next(`.drop-container`).find(`.drop-header`)
-
+                $drop2_search = $drop2_body.find('[data-search]');
                 //Crate drop list 
                 methods.updateList();
 
@@ -169,20 +169,20 @@
 
         }
 
-    
+
 
         function displayMultiple($select_options) {
             if (isMultiple && $select_options.is(':selected')) {
-             $drop2_head.text('');
-             $select_options.each(function (index) {
-                if ($(this).is(':selected')) {
-                    selected.push($(this).val())
-                    selected=[...new Set(selected)]
-                    $drop2_head.append(`<span class='drop2-choice' data-key="${$(this).val()}">${$(this).text()}<span class='clear-choice' onclick="event.stopPropagation()">×</span></span>`)
-                    keyEvents()
-                }
-             })
-            }else if(isMultiple){
+                $drop2_head.text('');
+                $select_options.each(function (index) {
+                    if ($(this).is(':selected')) {
+                        selected.push($(this).val())
+                        selected = [...new Set(selected)]
+                        $drop2_head.append(`<span class='drop2-choice' data-key="${$(this).val()}">${$(this).text()}<span class='clear-choice' onclick="event.stopPropagation()">×</span></span>`)
+                        dispalyValues()
+                    }
+                })
+            } else if (isMultiple) {
                 $drop2_head.text('Select Options');
             }
         }
@@ -199,6 +199,7 @@
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).removeClass('drop-hover');
                         $drop2_list_body.scrollTop(34 * (currentIndex - (settings.options - 1)));
                         currentIndex++;
+                        console.log(currentIndex)
                         $drop2_list_body.scrollTop(34 * (currentIndex - (settings.options - 1)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
                     }
@@ -215,7 +216,7 @@
                 }
             })
 
-            if (isMultiple) {
+            if(isMultiple){
                 $drop2_body.find(`.drop-select`).on('click', function () {
                     $jq.val(selected).change();
                     displayMultiple($select_options)
@@ -232,20 +233,25 @@
                     selected.forEach(num => $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected', 'true'))
                     methods.hide()
                 })
+            }
 
-                $drop2_head.find('.clear-choice').each(function(){
-                    $(this).on('click',$(this).closest('.drop-header'),function(){
+        }
+
+
+        function dispalyValues() {
+            if (isMultiple) {
+            
+
+                $drop2_head.find('.clear-choice').each(function () {
+                    $(this).on('click', $(this).closest('.drop-header'), function () {
                         console.log($(this))
-                       var choice_value = $(this).parent().attr('data-key')
-                       selected = selected.filter(num => num != choice_value);
-                       $jq.val(selected).change();
-                       displayMultiple($select_options);
+                        var choice_value = $(this).parent().attr('data-key')
+                        selected = selected.filter(num => num != choice_value);
+                        $jq.val(selected).change();
+                        displayMultiple($select_options);
                         $drop2_list_body.find(`[data-key=${choice_value}]`).attr('drop-selected', 'false')
                     })
-                    
-                    
                 })
-               
             }
         }
 
