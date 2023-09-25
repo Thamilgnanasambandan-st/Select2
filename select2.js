@@ -30,14 +30,15 @@
                 $select_options = $($el).children('option')
                 $drop2_body = $jq.next(`.drop-container`).find(`.drop-body`)
                 $drop2_list_body = $($el).next(`.drop-container`).find(`.drop-body ul`)
-                $drop2_head = $el.next(`.drop-container`).find(`.drop-header`)
-                $drop2_search = $drop2_body.find('[data-search]');
+                $drop2_head = $jq.next(`.drop-container`).find(`.drop-header`)
+             
                 //Crate drop list 
                 methods.updateList();
 
                 searchOptions($drop2_body);
 
-                displayMultiple($select_options)
+                $drop2_search = $jq.next(`.drop-container`).find('input[data-search]');
+
 
                 //Open drop while click header
                 $drop2_head.on('click', function () {
@@ -71,6 +72,7 @@
 
             //Crate drop list 
             updateList: function () {
+                
                 $drop2_list_body.html(' ');
                 $drop2_list_body.css('opacity', 0);
                 if ($select_options.length >= settings.searchMin) {
@@ -81,6 +83,7 @@
                 //To declare the search element end
                 $select_options.each(function (index) {
                     $(this).attr("data-drop2-id", `${index}`);
+                       
                     if ($(this).is(':selected')) {
                         $drop2_list_body.append(`<li data-drop2-id='${index}' data-key='${$(this).val()}'  drop-selected='true'>${$(this).text()}</li>`);
 
@@ -95,13 +98,16 @@
                 $jq.next().find('[data-drop2-id]').on('click', function () {
                     clickOption($(this));
                 })
+
+                displayMultiple($select_options)
+
             },
 
 
             // Show methods
             show: function () {
                 $drop2_body.attr('drop-render', 'show');
-                $drop2_search.focus();
+                $drop2_body.find('input[data-search]').focus();
                 $drop2_list_body.scrollTop(0);
                 createIndex()
                 dropdownHeight($drop2_list_body)
@@ -115,6 +121,9 @@
         };
         function createIndex(data) {
             let count = 0;
+
+            $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
+
             $drop2_list.attr('data-drop2-id', '')
             $drop2_list.removeClass('drop-hover');
             $drop2_list.each(function (index) {
