@@ -84,17 +84,24 @@
                 //To declare the search element end
                 $select_options.each(function (index) {
                     $(this).attr("data-drop2-id", `${index}`);
-                       var badge_condition = $(this).attr("data-badge")
-                    if ($(this).is(':selected')) {
-                        $drop2_list_body.append(`<li data-drop2-id='${index}' data-key='${$(this).val()}'  drop-selected='true'><span>${$(this).text()}</span> <span>${badge_condition ? badge_condition : ''}</sapan></li>`);
-
-                    } else {
-                        $drop2_list_body.append(`<li data-drop2-id='${index}' data-key='${$(this).val()}' drop-selected='false'><span>${$(this).text()}</span> <span>${badge_condition ? badge_condition : ''}</sapan></li>`)
-                    }
+                       var badge_condition = $(this).attr("data-badge");
+                       let htTag = badgeHtml(badge_condition);
+                       console.log(htTag);
+                        let listElement = $('<li>');
+                            listElement.attr({
+                                'data-drop2-id': index,
+                                'data-key': $(this).val(),
+                                'drop-selected': $(this).is(':selected')? true : false,
+                            });
+                         
+                            listElement.append(`<span>${$(this).text()}</span>`);
+                            listElement.append(htTag);
+                            $drop2_list_body.append(listElement)
+                       
                 });
                 // Select option default selected 
                 $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
-                createIndex('sample');
+                // createIndex('sample');
 
                 $jq.next().find('[data-drop2-id]').on('click', function () {
                     clickOption($(this));
@@ -110,8 +117,16 @@
                 $drop2_body.attr('drop-render', 'show');
                 $drop2_body.find('input[data-search]').focus();
                 $drop2_list_body.scrollTop(0);
-                createIndex()
                 dropdownHeight($drop2_list_body)
+                var keyPressed = false;
+                $(document).keydown(function(event) {
+                    if (!keyPressed && event.keyCode === 40) {
+                      createIndex()
+                      keyPressed = true;
+                    }
+                  })
+          
+
             },
             // Hide methods
             hide: function () {
@@ -155,7 +170,26 @@
             });
 
         }
+        function badgeHtml(data){
+            if(data){
+                let js = JSON.parse(data);
+                let parentHtml = $('<span class="listBadge">');
+                
+                js.map(function(obj){
+                    let htTag = $('<span>', {class: 'badgeChild'});
+                        htTag.css({
+                            'background-color': obj.badgeColor?obj.badgeColor:'',
+                            'color': obj.badgeTextColor?obj.badgeTextColor:'',
+                            'border': obj.badgeBorder?obj.badgeBorder:''
+                        });
+                        htTag.addClass(obj.badgeClass?obj.badgeClass:'badge');
+                        htTag.text(obj.badgeContent);
+                    parentHtml.append(htTag);
+                })
+                return parentHtml;
+            }
 
+        }
         function searchOptions(target) {
             target.find('[data-search]').on('keyup', function (event) {
                 var searchTerm = $(this).val().toLowerCase();
