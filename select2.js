@@ -75,20 +75,21 @@
                 
                 $drop2_list_body.html(' ');
                 $drop2_list_body.css('opacity', 0);
-                if ($select_options.length >= settings.searchMin) {
+                if ($select_options.length >= settings.searchMin && $drop2_body.find('input').length == 0) {
                     $drop2_body.prepend('<div><input type="text" placeholder="Search" data-search=""></div> ')
                 }
                 //To declare the search element start
                 $drop2_search = $drop2_body.find('[data-search]');
+                
                 //To declare the search element end
                 $select_options.each(function (index) {
                     $(this).attr("data-drop2-id", `${index}`);
-                       
+                       var badge_condition = $(this).attr("data-badge")
                     if ($(this).is(':selected')) {
-                        $drop2_list_body.append(`<li data-drop2-id='${index}' data-key='${$(this).val()}'  drop-selected='true'>${$(this).text()}</li>`);
+                        $drop2_list_body.append(`<li data-drop2-id='${index}' data-key='${$(this).val()}'  drop-selected='true'><span>${$(this).text()}</span> <span>${badge_condition ? badge_condition : ''}</sapan></li>`);
 
                     } else {
-                        $drop2_list_body.append(`<li data-drop2-id='${index}' data-key='${$(this).val()}' drop-selected='false'>${$(this).text()}</li>`)
+                        $drop2_list_body.append(`<li data-drop2-id='${index}' data-key='${$(this).val()}' drop-selected='false'><span>${$(this).text()}</span> <span>${badge_condition ? badge_condition : ''}</sapan></li>`)
                     }
                 });
                 // Select option default selected 
@@ -182,17 +183,17 @@
 
         function displayMultiple($select_options) {
             if (isMultiple && $select_options.is(':selected')) {
-                $drop2_head.text('');
+                $jq.next(`.drop-container`).find(`.drop-header`).text('');
                 $select_options.each(function (index) {
                     if ($(this).is(':selected')) {
                         selected.push($(this).val())
                         selected = [...new Set(selected)]
-                        $drop2_head.append(`<span class='drop2-choice' data-key="${$(this).val()}">${$(this).text()}<span class='clear-choice' onclick="event.stopPropagation()">×</span></span>`)
+                        $jq.next(`.drop-container`).find(`.drop-header`).append(`<span class='drop2-choice' data-key="${$(this).val()}">${$(this).text()}<span class='clear-choice' onclick="event.stopPropagation()">×</span></span>`)
                         dispalyValues()
                     }
                 })
             } else if (isMultiple) {
-                $drop2_head.text('Select Options');
+                $jq.next(`.drop-container`).find(`.drop-header`).text('Select Options');
             }
         }
 
@@ -251,7 +252,7 @@
             if (isMultiple) {
             
 
-                $drop2_head.find('.clear-choice').each(function () {
+                $jq.next(`.drop-container`).find(`.drop-header`).find('.clear-choice').each(function () {
                     $(this).on('click', $(this).closest('.drop-header'), function () {
                         console.log($(this))
                         var choice_value = $(this).parent().attr('data-key')

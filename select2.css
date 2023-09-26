@@ -115,3 +115,7 @@ input[data-search]{
 .hidden{
   color: red;
 }
+.drop-body li{
+  display: flex;
+  justify-content: space-between;
+}
