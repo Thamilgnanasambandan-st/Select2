@@ -82,7 +82,6 @@
                     $(this).attr("data-drop2-id", `${index}`);
                     var badge_condition = $(this).attr("data-badge");
                     let htTag = badgeHtml(badge_condition);
-                    console.log(htTag);
                     let listElement = $('<li>');
                     listElement.attr({
                         'data-drop2-id': index,
