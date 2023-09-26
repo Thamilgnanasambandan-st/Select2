@@ -17,7 +17,6 @@
             init: function () {
                 $el = $jq
                 $el.addClass(`drop2-select`)
-
                 // Create drop conatiner and header
                 if ($el.attr('multiple') == 'multiple') {
                     $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>Select Options</div> <div class='drop-body' drop-render='hide'><ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div></div>`)
@@ -31,14 +30,13 @@
                 $drop2_body = $jq.next(`.drop-container`).find(`.drop-body`)
                 $drop2_list_body = $($el).next(`.drop-container`).find(`.drop-body ul`)
                 $drop2_head = $jq.next(`.drop-container`).find(`.drop-header`)
-             
+
                 //Crate drop list 
                 methods.updateList();
 
                 searchOptions($drop2_body);
 
                 $drop2_search = $jq.next(`.drop-container`).find('input[data-search]');
-
 
                 //Open drop while click header
                 $drop2_head.on('click', function () {
@@ -52,7 +50,6 @@
                         methods.hide()
                     }
                 })
-
 
                 var selected_data = $($el).children("option:selected").attr('data-drop2-id')
                 $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).prop('drop-selected', true);
@@ -72,7 +69,6 @@
 
             //Crate drop list 
             updateList: function () {
-                
                 $drop2_list_body.html(' ');
                 $drop2_list_body.css('opacity', 0);
                 if ($select_options.length >= settings.searchMin && $drop2_body.find('input').length == 0) {
@@ -80,24 +76,24 @@
                 }
                 //To declare the search element start
                 $drop2_search = $drop2_body.find('[data-search]');
-                
+
                 //To declare the search element end
                 $select_options.each(function (index) {
                     $(this).attr("data-drop2-id", `${index}`);
-                       var badge_condition = $(this).attr("data-badge");
-                       let htTag = badgeHtml(badge_condition);
-                       console.log(htTag);
-                        let listElement = $('<li>');
-                            listElement.attr({
-                                'data-drop2-id': index,
-                                'data-key': $(this).val(),
-                                'drop-selected': $(this).is(':selected')? true : false,
-                            });
-                         
-                            listElement.append(`<span>${$(this).text()}</span>`);
-                            listElement.append(htTag);
-                            $drop2_list_body.append(listElement)
-                       
+                    var badge_condition = $(this).attr("data-badge");
+                    let htTag = badgeHtml(badge_condition);
+                    console.log(htTag);
+                    let listElement = $('<li>');
+                    listElement.attr({
+                        'data-drop2-id': index,
+                        'data-key': $(this).val(),
+                        'drop-selected': $(this).is(':selected') ? true : false,
+                    });
+
+                    listElement.append(`<span>${$(this).text()}</span>`);
+                    listElement.append(htTag);
+                    $drop2_list_body.append(listElement)
+
                 });
                 // Select option default selected 
                 $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
@@ -111,7 +107,6 @@
 
             },
 
-
             // Show methods
             show: function () {
                 $drop2_body.attr('drop-render', 'show');
@@ -119,14 +114,12 @@
                 $drop2_list_body.scrollTop(0);
                 dropdownHeight($drop2_list_body)
                 var keyPressed = false;
-                $(document).keydown(function(event) {
+                $(document).keydown(function (event) {
                     if (!keyPressed && event.keyCode === 40) {
-                      createIndex()
-                      keyPressed = true;
+                        createIndex()
+                        keyPressed = true;
                     }
-                  })
-          
-
+                })
             },
             // Hide methods
             hide: function () {
@@ -137,9 +130,7 @@
         };
         function createIndex(data) {
             let count = 0;
-
             $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
-
             $drop2_list.attr('data-drop2-id', '')
             $drop2_list.removeClass('drop-hover');
             $drop2_list.each(function (index) {
@@ -170,25 +161,24 @@
             });
 
         }
-        function badgeHtml(data){
-            if(data){
+        function badgeHtml(data) {
+            if (data) {
                 let js = JSON.parse(data);
                 let parentHtml = $('<span class="listBadge">');
-                
-                js.map(function(obj){
-                    let htTag = $('<span>', {class: 'badgeChild'});
-                        htTag.css({
-                            'background-color': obj.badgeColor?obj.badgeColor:'',
-                            'color': obj.badgeTextColor?obj.badgeTextColor:'',
-                            'border': obj.badgeBorder?obj.badgeBorder:''
-                        });
-                        htTag.addClass(obj.badgeClass?obj.badgeClass:'badge');
-                        htTag.text(obj.badgeContent);
+
+                js.map(function (obj) {
+                    let htTag = $('<span>', { class: 'badgeChild' });
+                    htTag.css({
+                        'background-color': obj.badgeColor ? obj.badgeColor : '',
+                        'color': obj.badgeTextColor ? obj.badgeTextColor : '',
+                        'border': obj.badgeBorder ? obj.badgeBorder : ''
+                    });
+                    htTag.addClass(obj.badgeClass ? obj.badgeClass : 'badge');
+                    htTag.text(obj.badgeContent);
                     parentHtml.append(htTag);
                 })
                 return parentHtml;
             }
-
         }
         function searchOptions(target) {
             target.find('[data-search]').on('keyup', function (event) {
@@ -210,10 +200,7 @@
                     createIndex('search');
                 }
             });
-
         }
-
-
 
         function displayMultiple($select_options) {
             if (isMultiple && $select_options.is(':selected')) {
@@ -260,7 +247,7 @@
                 }
             })
 
-            if(isMultiple){
+            if (isMultiple) {
                 $drop2_body.find(`.drop-select`).on('click', function () {
                     $jq.val(selected).change();
                     displayMultiple($select_options)
@@ -278,14 +265,11 @@
                     methods.hide()
                 })
             }
-
         }
 
 
         function dispalyValues() {
             if (isMultiple) {
-            
-
                 $jq.next(`.drop-container`).find(`.drop-header`).find('.clear-choice').each(function () {
                     $(this).on('click', $(this).closest('.drop-header'), function () {
                         console.log($(this))
@@ -321,13 +305,11 @@
                 if (isMultiple) {
                     selected.push(target.attr('data-key'))
                     selected = [...new Set(selected.concat($jq.val()))]
-
                 }
                 else {
                     $jq.val(target.attr('data-key')).change();
                     $drop2_head.text(target.text())
                     methods.hide()
-
                 }
             }
         }
