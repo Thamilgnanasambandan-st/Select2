@@ -22,7 +22,6 @@
                 $el.addClass(`drop2-select`)
                 // Create drop conatiner and header
                 if ($el.attr('multiple') == 'multiple') {
-                    console.log(settings.customeheader)
                     $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>${  settings.customeheader }</div> <div class='drop-body' drop-render='hide'><ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div></div>`)
 
                 } else {
@@ -348,15 +347,12 @@
                 $select_options = $($el).children('option')
                 $drop2_body = $jq.next(`.drop-container`).find(`.drop-body`)
                 $drop2_list_body = $($el).next(`.drop-container`).find(`.drop-body ul`)
-
                 // If a option with the provided name exists, call it with the given parameters
                 return methods[options].apply(this);
             } else if (typeof options === 'object' || !options) {
-
                 // If no option name is provided, or the argument is an object (options), initialize the plugin
                 return methods.init()
             } else {
-
                 // Handle errors for unknown option names
                 $.error('option ' + options + ' does not exist on jQuery.myCustomPlugin');
             }
