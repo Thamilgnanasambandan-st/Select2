@@ -24,9 +24,9 @@
             <p class="mb-3">This is Multislect</p>
             <select name="cars" id="car" multiple>
                 <option value="v1" data-badge='[{"badgeContent": "No-1","badgeColor": "#fcfcfc"},{"badgeContent": "No-1.1", "badgeClass":"testClass"}]' >Volvo-1</option>
-                <option value="s1" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' selected >Saab-1</option>
+                <!-- <option value="s1" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' selected >Saab-1</option>
                 <option value="o1" data-badge='[{"badgeContent": "No-3","badgeColor": "#fcfcfc"}]' selected>Opel-1</option>
-                <option value="a1" data-badge='[{"badgeContent": "No-4","badgeColor": "#e2f1f3"}]' selected>Audi-1</option>
+                <option value="a1" data-badge='[{"badgeContent": "No-4","badgeColor": "#e2f1f3"}]' selected>Audi-1</option> -->
                 <option value="v2" data-badge='[{"badgeContent": "No-5","badgeColor": "#fcfcfc"}]' >Volvo-1</option>
                 <option value="s2" data-badge='[{"badgeContent": "No-6","badgeColor": "#e2f1f3"}]' >Saab-1</option>
                 <option value="o2" data-badge='[{"badgeContent": "No-7","badgeColor": "#fcfcfc"}]' >Opel-1</option>
@@ -65,16 +65,20 @@
         <div class="ml-10">
             <p class="mb-3">This is Single select</p>
             <select name="cars" data-drop="car" id="demo3">
-                <option >Volvo-3</option>
-                <option >Saab-3</option>
-                <option >Opel-3</option>
-                <option>Audi-3</option>
+                <option value="v3" >Volvo-3</option>
+                <option  value="s3">Saab-3</option>
+                <option  value="o1">Opel-3</option>
+                <option value="a3">Audi-3</option>
             </select>
         </div>
     </div>
     <script>
         $(function () {
-            $('#car').drop2();
+            $('#car').drop2({
+                showSelectedBadge: true,
+                countBadge: true,
+                customeheader :'Select User',
+            });
             $('.car').drop2();
             $('[data-drop="car"]').drop2({
                 searchMin: 2

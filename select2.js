@@ -8,7 +8,10 @@
         let selected = [];
         var settings = $.extend({
             options: 5,
-            searchMin: 5
+            searchMin: 5,
+            showSelectedBadge: true,
+            customeheader: 'Select Options',
+            countBadge: false
 
         }, options);
 
@@ -19,10 +22,11 @@
                 $el.addClass(`drop2-select`)
                 // Create drop conatiner and header
                 if ($el.attr('multiple') == 'multiple') {
-                    $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>Select Options</div> <div class='drop-body' drop-render='hide'><ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div></div>`)
+                    console.log(settings.customeheader)
+                    $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>${  settings.customeheader }</div> <div class='drop-body' drop-render='hide'><ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div></div>`)
 
                 } else {
-                    $el.after(`<div class='drop-container'><div class='drop-header'>${$el.val()}</div> <div class='drop-body' drop-render='hide'><ul></ul></div></div>`)
+                    $el.after(`<div class='drop-container'><div class='drop-header'>${ settings.customeheader ? settings.customeheader : 'Select Options' }</div> <div class='drop-body' drop-render='hide'><ul></ul></div></div>`)
                 }
 
                 // assign variables and names
@@ -102,7 +106,10 @@
                     clickOption($(this));
                 })
 
-                displayMultiple($select_options)
+
+                if ($el.val().length != 0) {
+                    displayMultiple($select_options)
+                }
 
             },
 
@@ -209,11 +216,15 @@
                         selected.push($(this).val())
                         selected = [...new Set(selected)]
                         $jq.next(`.drop-container`).find(`.drop-header`).append(`<span class='drop2-choice' data-key="${$(this).val()}">${$(this).text()}<span class='clear-choice' onclick="event.stopPropagation()">×</span></span>`)
-                        dispalyValues()
                     }
                 })
+                dispalyValues();
+
             } else if (isMultiple) {
-                $jq.next(`.drop-container`).find(`.drop-header`).text('Select Options');
+                $jq.next(`.drop-container`).find(`.drop-header`).text();
+            } else if (!isMultiple) {
+                var selected_data = $el.find(`[value=${$el.val()}]`).text();
+                $jq.next(`.drop-container`).find(`.drop-header`).text(selected_data)
             }
         }
 
@@ -251,6 +262,7 @@
                     $jq.val(selected).change();
                     displayMultiple($select_options)
                     methods.hide();
+                    badgeCount();
                     $el.trigger('drop2-select-submitted');
                 })
                 $drop2_body.find(`.drop-cancel`).on('click', function () {
@@ -265,23 +277,39 @@
                 })
             }
         }
-
-
         function dispalyValues() {
             if (isMultiple) {
-                $jq.next(`.drop-container`).find(`.drop-header`).find('.clear-choice').each(function () {
-                    $(this).on('click', $(this).closest('.drop-header'), function () {
-                        console.log($(this))
-                        var choice_value = $(this).parent().attr('data-key')
-                        selected = selected.filter(num => num != choice_value);
-                        $jq.val(selected).change();
-                        displayMultiple($select_options);
-                        $drop2_list_body.find(`[data-key=${choice_value}]`).attr('drop-selected', 'false')
-                    })
-                })
+                $jq.next(`.drop-container`).find(`.drop-header`).find('.clear-choice').on('click', function () {
+                    var choice_value = $(this).parent().attr('data-key')
+                    selected = selected.filter(num => num != choice_value);
+                    console.log(selected)
+                    $jq.val(selected).change();
+                    displayMultiple($select_options);
+                    $drop2_list_body.find(`[data-key=${choice_value}]`).attr('drop-selected', 'false')
+                });
             }
+            else {
+                $drop2_head.text(selected);
+            }
+            badgeCount();
         }
 
+        function badgeCount() {
+            let cnt = $jq.val().length;
+            $drop2_head.attr('count', $jq.val().length);
+            if (cnt) {
+                $drop2_head.addClass('hasValue')
+            } else {
+                $drop2_head.removeClass('hasValue')
+            }
+            if (settings.countBadge) {
+                $drop2_head.addClass('showCount');
+            }
+            else {
+                $drop2_head.removeClass('showCount');
+            }
+
+        }
         function listSelected(target, condition) {
             isMultiple ? '' : $el.next().find('[data-drop2-id]').attr('drop-selected', 'false');
             if (isMultiple && (condition === 'true')) {
