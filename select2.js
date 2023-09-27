@@ -21,13 +21,7 @@
                 $el = $jq
                 $el.addClass(`drop2-select`)
                 // Create drop conatiner and header
-                if ($el.attr('multiple') == 'multiple') {
-                    $el.after(`<div class='drop-container multiselect-drop'><div class='drop-header'>${  settings.customeheader }</div> <div class='drop-body' drop-render='hide'><ul></ul><div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div></div>`)
-
-                } else {
-                    $el.after(`<div class='drop-container'><div class='drop-header'>${ settings.customeheader ? settings.customeheader : 'Select Options' }</div> <div class='drop-body' drop-render='hide'><ul></ul></div></div>`)
-                }
-
+                    $el.after(`<div class='drop-container ${$el.attr('multiple') ? 'multiselect-drop' : '' }'><div class='drop-header'>${ settings.customeheader ? settings.customeheader : 'Select Options' }</div> <div class='drop-body' drop-render='hide'><ul></ul>${$el.attr('multiple') ? "<div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>":''}</div>`)
                 // assign variables and names
                 $select_options = $($el).children('option')
                 $drop2_body = $jq.next(`.drop-container`).find(`.drop-body`)
