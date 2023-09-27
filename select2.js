@@ -22,12 +22,7 @@
                 $el.addClass(`drop2-select`)
                 // Create drop conatiner and header
                 $el.after(`<div class='drop-container ${$el.attr('multiple') ? 'multiselect-drop' : ''}'><div class='drop-header'>${settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'><ul></ul>${$el.attr('multiple') ? "<div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div>`)
-                // assign variables and names
-                $select_options = $($el).children('option')
-                $drop2_body = $jq.next(`.drop-container`).find(`.drop-body`)
-                $drop2_list_body = $($el).next(`.drop-container`).find(`.drop-body ul`)
-                $drop2_head = $jq.next(`.drop-container`).find(`.drop-header`)
-
+                component()
                 //Crate drop list 
                 methods.updateList();
 
@@ -67,6 +62,7 @@
 
             //Crate drop list 
             updateList: function () {
+                component()
                 $drop2_list_body.html(' ');
                 $drop2_list_body.css('opacity', 0);
                 if ($select_options.length >= settings.searchMin && $drop2_body.find('input').length == 0) {
@@ -100,8 +96,7 @@
                     clickOption($(this));
                 })
 
-
-                if ($el.val().length != 0) {
+                if ($jq.val().length != 0) {
                     displayMultiple($select_options)
                 }
 
@@ -129,7 +124,13 @@
             // Add more methods as needed...
         };
 
-      
+        function component() {
+            // assign variables and names
+            $select_options = $jq.children('option')
+            $drop2_body = $jq.next(`.drop-container`).find(`.drop-body`)
+            $drop2_list_body = $jq.next(`.drop-container`).find(`.drop-body ul`)
+            $drop2_head = $jq.next(`.drop-container`).find(`.drop-header`)
+        }
 
         function createIndex(data) {
             let count = 0;
@@ -238,7 +239,6 @@
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).removeClass('drop-hover');
                         $drop2_list_body.scrollTop(34 * (currentIndex - (settings.options - 1)));
                         currentIndex++;
-                        console.log(currentIndex)
                         $drop2_list_body.scrollTop(34 * (currentIndex - (settings.options - 1)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
                     }
@@ -280,7 +280,6 @@
                 $jq.next(`.drop-container`).find(`.drop-header`).find('.clear-choice').on('click', function () {
                     var choice_value = $(this).parent().attr('data-key')
                     selected = selected.filter(num => num != choice_value);
-                    console.log(selected)
                     $jq.val(selected).change();
                     displayMultiple($select_options);
                     $drop2_list_body.find(`[data-key=${choice_value}]`).attr('drop-selected', 'false')
