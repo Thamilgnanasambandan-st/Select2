@@ -214,7 +214,8 @@
                 dispalyValues();
 
             } else if (isMultiple) {
-                $jq.next(`.drop-container`).find(`.drop-header`).text();
+                $jq.next(`.drop-container`).find(`.drop-header`).text(`${ settings.customeheader ? settings.customeheader : 'Select Options' }`);
+
             } else if (!isMultiple) {
                 var selected_data = $el.find(`[value=${$el.val()}]`).text();
                 $jq.next(`.drop-container`).find(`.drop-header`).text(selected_data)
