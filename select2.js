@@ -101,6 +101,7 @@
             },
             // Add more methods as needed...
         };
+        //Assign common variables
         function component() {
             // assign variables and names
             $select_options = $jq.children('option')
@@ -109,6 +110,7 @@
             $drop2_head = $jq.next(`.drop-container`).find(`.drop-header`)
             $drop2_search = $jq.next(`.drop-container`).find('input[data-search]');
         }
+        //Create list options index
         function createIndex(data) {
             let count = 0;
             $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
@@ -122,6 +124,7 @@
             })
             $drop2_list_body.find('[data-drop2-id="0"]').addClass('drop-hover')
         }
+        //Limit dropdown Height
         function dropdownHeight(targetList) {
             let c = 0;
             let he = 0;
@@ -139,6 +142,7 @@
                 'opacity': 1,
             });
         }
+        //Assign Badges
         function badgeHtml(data) {
             if (data) {
                 let js = JSON.parse(data);
@@ -157,6 +161,7 @@
                 return parentHtml;
             }
         }
+        //Filter Search Options
         function searchOptions(target) {
             target.find('[data-search]').on('keyup', function (event) {
                 var searchTerm = $(this).val().toLowerCase();
@@ -178,6 +183,8 @@
                 }
             });
         }
+
+        //Display Selected values at Dropdown Head
         function displayMultiple($select_options) {
             if (isMultiple && $select_options.is(':selected')) {
                 $jq.next(`.drop-container`).find(`.drop-header`).text('');
@@ -196,6 +203,7 @@
                 $jq.next(`.drop-container`).find(`.drop-header`).text(selected_data)
             }
         }
+        // All key events
         function keyEvents() {
             $(document).on("keydown", function (event) {
                 let currentIndex = $drop2_list_body.find('.drop-hover').attr('data-drop2-id');
@@ -250,6 +258,7 @@
                 });
             }
         }
+        //Display Cleared Value
         function dispalyValues() {
             if (isMultiple) {
                 $jq.next(`.drop-container`).find(`.drop-header`).find('.clear-choice').on('click', function () {
@@ -265,12 +274,14 @@
                 $drop2_head.text(selected);
             }
         }
+        //Display Counts
         function badgeCount() {
             let cnt = $jq.val().length;
             $drop2_head.attr('count', $jq.val().length);
             cnt ? $drop2_head.addClass('hasValue') : $drop2_head.removeClass('hasValue')
             settings.countBadge ? $drop2_head.addClass('showCount') : $drop2_head.removeClass('showCount');
         }
+        //Here add teprory selected options
         function listSelected(target, condition) {
             isMultiple ? '' : $el.next().find('[data-drop2-id]').attr('drop-selected', 'false');
             if (isMultiple && (condition === 'true')) {

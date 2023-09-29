@@ -140,3 +140,19 @@ input[data-search]{
   align-items: center;
   justify-content: center;
 }
+.drop-header.hasValue.showCount::before {
+  content: attr(count);
+  position: absolute;
+  top: -20px;
+  right: -10px;
+  border: 0.5px solid gray;
+  background: blue;
+  color: white;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
