@@ -12,9 +12,7 @@
             showSelectedBadge: true,
             customeheader: 'Select Options',
             countBadge: false
-
         }, options);
-
 
         var methods = {
             init: function () {
@@ -25,11 +23,7 @@
                 component()
                 //Crate drop list 
                 methods.updateList();
-
                 searchOptions($drop2_body);
-
-                $drop2_search = $jq.next(`.drop-container`).find('input[data-search]');
-
                 //Open drop while click header
                 $drop2_head.on('click', function () {
                     if ($drop2_body.attr("drop-render") == 'hide') {
@@ -42,13 +36,10 @@
                         methods.hide()
                     }
                 })
-
                 var selected_data = $($el).children("option:selected").attr('data-drop2-id')
                 $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).prop('drop-selected', true);
-
                 // Create events and functionality 
                 keyEvents()
-
                 // Close dropdown while click outside
                 $(document).on("click", function (event) {
                     var $trigger = $jq.next()
@@ -56,10 +47,7 @@
                         methods.hide()
                     }
                 })
-
             },
-
-
             //Crate drop list 
             updateList: function () {
                 component()
@@ -70,7 +58,6 @@
                 }
                 //To declare the search element start
                 $drop2_search = $drop2_body.find('[data-search]');
-
                 //To declare the search element end
                 $select_options.each(function (index) {
                     $(this).attr("data-drop2-id", `${index}`);
@@ -82,26 +69,20 @@
                         'data-key': $(this).val(),
                         'drop-selected': $(this).is(':selected') ? true : false,
                     });
-
                     listElement.append(`<span>${$(this).text()}</span>`);
                     listElement.append(htTag);
                     $drop2_list_body.append(listElement)
-
                 });
                 // Select option default selected 
                 $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
                 // createIndex('sample');
-
                 $jq.next().find('[data-drop2-id]').on('click', function () {
                     clickOption($(this));
                 })
-
                 if ($jq.val().length != 0) {
                     displayMultiple($select_options)
                 }
-
             },
-
             // Show methods
             show: function () {
                 $drop2_body.attr('drop-render', 'show');
@@ -120,18 +101,16 @@
             hide: function () {
                 $drop2_body.attr('drop-render', 'hide');
             },
-
             // Add more methods as needed...
         };
-
         function component() {
             // assign variables and names
             $select_options = $jq.children('option')
             $drop2_body = $jq.next(`.drop-container`).find(`.drop-body`)
             $drop2_list_body = $jq.next(`.drop-container`).find(`.drop-body ul`)
             $drop2_head = $jq.next(`.drop-container`).find(`.drop-header`)
+            $drop2_search = $jq.next(`.drop-container`).find('input[data-search]');
         }
-
         function createIndex(data) {
             let count = 0;
             $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
@@ -148,7 +127,6 @@
         function dropdownHeight(targetList) {
             let c = 0;
             let he = 0;
-
             targetList.find('li').each(function () {
                 c++;
                 if (c <= settings.options) {
@@ -158,18 +136,15 @@
                     he = he + ($(this).outerHeight() / 2);
                 }
             })
-
             targetList.css({
                 'max-height': he + 'px',
                 'opacity': 1,
             });
-
         }
         function badgeHtml(data) {
             if (data) {
                 let js = JSON.parse(data);
                 let parentHtml = $('<span class="listBadge">');
-
                 js.map(function (obj) {
                     let htTag = $('<span>', { class: 'badgeChild' });
                     htTag.css({
@@ -205,7 +180,6 @@
                 }
             });
         }
-
         function displayMultiple($select_options) {
             if (isMultiple && $select_options.is(':selected')) {
                 $jq.next(`.drop-container`).find(`.drop-header`).text('');
@@ -226,12 +200,10 @@
                 $jq.next(`.drop-container`).find(`.drop-header`).text(selected_data)
             }
         }
-
         function keyEvents() {
             $drop2_body.find(`.drop-cancel`).on('click', function () {
                 methods.hide();
             })
-
             $(document).on("keydown", function (event) {
                 let currentIndex = $drop2_list_body.find('.drop-hover').attr('data-drop2-id');
                 if ($drop2_body.attr('drop-render') == 'show') {
@@ -290,7 +262,6 @@
             }
             badgeCount();
         }
-
         function badgeCount() {
             let cnt = $jq.val().length;
             $drop2_head.attr('count', $jq.val().length);
@@ -305,7 +276,6 @@
             else {
                 $drop2_head.removeClass('showCount');
             }
-
         }
         function listSelected(target, condition) {
             isMultiple ? '' : $el.next().find('[data-drop2-id]').attr('drop-selected', 'false');
@@ -316,7 +286,6 @@
                 target.attr('drop-selected', 'true');
             }
         }
-
         function clickOption(target) {
             let currentListSelected = target.attr('drop-selected');
             listSelected(target, currentListSelected)
@@ -337,9 +306,7 @@
                 }
             }
         }
-
         return this.each(function () {
-
             var $el = $(this);
             if (methods[options]) {
                 $select_options = $($el).children('option')
@@ -354,10 +321,7 @@
                 // Handle errors for unknown option names
                 $.error('option ' + options + ' does not exist on jQuery.myCustomPlugin');
             }
-
         });
 
     };
-
-
 })(jQuery);
