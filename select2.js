@@ -186,6 +186,7 @@
 
         //Display Selected values at Dropdown Head
         function displayMultiple($select_options) {
+            
             if (isMultiple && $select_options.is(':selected')) {
                 $jq.next(`.drop-container`).find(`.drop-header`).text('');
                 $select_options.each(function (index) {
@@ -197,7 +198,7 @@
                 })
                 dispalyValues();
             } else if (isMultiple) {
-                $jq.next(`.drop-container`).find(`.drop-header`).text(`${settings.customeheader ? settings.customeheader : 'Select Options'}`);
+                $jq.next(`.drop-container`).find(`.drop-header`).text(`${settings.customeheader ? settings.customeheader : 'Select Options'}`);              
             } else if (!isMultiple) {
                 var selected_data = $el.find(`[value=${$el.val()}]`).text();
                 $jq.next(`.drop-container`).find(`.drop-header`).text(selected_data)
@@ -253,6 +254,7 @@
                     // Check if the click is within the pseudo-element's area
                     if (clickX >= 0 && clickX <= boundingBox.width && clickY >= 0 && clickY <= boundingBox.height) {
                         $jq.val('').change()
+                        selected = ['']
                         methods.updateList()
                     }
                 });
