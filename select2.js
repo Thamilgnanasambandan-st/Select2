@@ -56,8 +56,6 @@
                 if ($select_options.length >= settings.searchMin && $drop2_body.find('input').length == 0) {
                     $drop2_body.prepend('<div><input type="text" placeholder="Search" data-search=""></div> ')
                 }
-                //To declare the search element start
-                $drop2_search = $drop2_body.find('[data-search]');
                 //To declare the search element end
                 $select_options.each(function (index) {
                     $(this).attr("data-drop2-id", `${index}`);
