@@ -13,7 +13,6 @@
             customeheader: 'Select Options',
             countBadge: false
         }, options);
-
         var methods = {
             init: function () {
                 $el = $jq
@@ -54,7 +53,7 @@
                 $drop2_list_body.html(' ');
                 $drop2_list_body.css('opacity', 0);
                 if ($select_options.length >= settings.searchMin && $drop2_body.find('input').length == 0) {
-                    $drop2_body.prepend('<div><input type="text" placeholder="Search" data-search=""></div> ')
+                    $drop2_body.prepend(`<div class='search-section'><input type="text" placeholder="Search" data-search=""></div> `)
                 }
                 //To declare the search element end
                 $select_options.each(function (index) {
@@ -77,8 +76,9 @@
                 $jq.next().find('[data-drop2-id]').on('click', function () {
                     clickOption($(this));
                 })
-                if ($jq.val().length != 0) {
-                    displayMultiple($select_options)
+                displayMultiple($select_options);
+                if (isMultiple) {
+                    badgeCount();
                 }
             },
             // Show methods
@@ -189,19 +189,14 @@
                     }
                 })
                 dispalyValues();
-
             } else if (isMultiple) {
                 $jq.next(`.drop-container`).find(`.drop-header`).text(`${settings.customeheader ? settings.customeheader : 'Select Options'}`);
-
             } else if (!isMultiple) {
                 var selected_data = $el.find(`[value=${$el.val()}]`).text();
                 $jq.next(`.drop-container`).find(`.drop-header`).text(selected_data)
             }
         }
         function keyEvents() {
-            $drop2_body.find(`.drop-cancel`).on('click', function () {
-                methods.hide();
-            })
             $(document).on("keydown", function (event) {
                 let currentIndex = $drop2_list_body.find('.drop-hover').attr('data-drop2-id');
                 if ($drop2_body.attr('drop-render') == 'show') {
@@ -230,8 +225,8 @@
                     $jq.val(selected).change();
                     displayMultiple($select_options)
                     methods.hide();
-                    badgeCount();
                     $el.trigger('drop2-select-submitted');
+                    badgeCount();
                 })
                 $drop2_body.find(`.drop-cancel`).on('click', function () {
                     let difference = selected.filter(x => !$jq.val().includes(x));
@@ -243,6 +238,16 @@
                     selected.forEach(num => $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected', 'true'))
                     methods.hide()
                 })
+                $drop2_head.on('click', function (e) {
+                    const boundingBox = $(this).get(0).getBoundingClientRect();
+                    const clickX = e.clientX - boundingBox.left;
+                    const clickY = e.clientY - boundingBox.top;
+                    // Check if the click is within the pseudo-element's area
+                    if (clickX >= 0 && clickX <= boundingBox.width && clickY >= 0 && clickY <= boundingBox.height) {
+                        $jq.val('').change()
+                        methods.updateList()
+                    }
+                });
             }
         }
         function dispalyValues() {
@@ -252,28 +257,19 @@
                     selected = selected.filter(num => num != choice_value);
                     $jq.val(selected).change();
                     displayMultiple($select_options);
-                    $drop2_list_body.find(`[data-key=${choice_value}]`).attr('drop-selected', 'false')
+                    $drop2_list_body.find(`[data-key=${choice_value}]`).attr('drop-selected', 'false');
+                    badgeCount();
                 });
             }
             else {
                 $drop2_head.text(selected);
             }
-            badgeCount();
         }
         function badgeCount() {
             let cnt = $jq.val().length;
             $drop2_head.attr('count', $jq.val().length);
-            if (cnt) {
-                $drop2_head.addClass('hasValue')
-            } else {
-                $drop2_head.removeClass('hasValue')
-            }
-            if (settings.countBadge) {
-                $drop2_head.addClass('showCount');
-            }
-            else {
-                $drop2_head.removeClass('showCount');
-            }
+            cnt ? $drop2_head.addClass('hasValue') : $drop2_head.removeClass('hasValue')
+            settings.countBadge ? $drop2_head.addClass('showCount') : $drop2_head.removeClass('showCount');
         }
         function listSelected(target, condition) {
             isMultiple ? '' : $el.next().find('[data-drop2-id]').attr('drop-selected', 'false');

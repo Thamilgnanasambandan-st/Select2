@@ -119,3 +119,24 @@ input[data-search]{
   display: flex;
   justify-content: space-between;
 }
+.search-section{
+  display: flex;
+}
+
+.drop-header.hasValue{
+  padding-right: 30px;
+  position: relative;
+}
+.drop-header.hasValue::after{
+  position: absolute;
+  content: '\2717';
+  right: 5px;
+  border: 0.5px solid gray;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
