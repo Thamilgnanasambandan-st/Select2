@@ -127,18 +127,17 @@ input[data-search]{
   padding-right: 30px;
   position: relative;
 }
-.drop-header.hasValue::after{
+.drop-clear{
   position: absolute;
-  content: '\2717';
-  right: 5px;
-  border: 0.5px solid gray;
-  border-radius: 100%;
-  width: 20px;
-  height: 20px;
-  font-size: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+    right: 5px;
+    font-size: 10px;
+    border: 0.5px solid gray;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
 }
 .drop-header.hasValue.showCount::before {
   content: attr(count);

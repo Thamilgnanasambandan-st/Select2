@@ -193,9 +193,18 @@
                     if ($(this).is(':selected')) {
                         selected.push($(this).val())
                         selected = [...new Set(selected)]
-                        $jq.next(`.drop-container`).find(`.drop-header`).append(`<span class='drop2-choice' data-key="${$(this).val()}">${$(this).text()}<span class='clear-choice' onclick="event.stopPropagation()">×</span></span>`)
+                        $jq.next(`.drop-container`).find(`.drop-header`).append(`<span class='drop2-choice' data-key="${$(this).val()}">${$(this).text()}<span class='clear-choice' onclick="event.stopPropagation()">×</span></span> `)
+                        console.log(isMultiple && selected.length)
                     }
                 })
+                $jq.next(`.drop-container`).find(`.drop-header`).append(`${ selected.length > 0 ? "<span class='drop-clear'>&#x2715</span>" : '' }`)
+                $drop2_head.find('.drop-clear').on('click',function(){
+                    $jq.val('').change()
+                    selected = ['']
+                    methods.updateList()
+                    console.log($drop2_head)
+                  })
+
                 dispalyValues();
             } else if (isMultiple) {
                 $jq.next(`.drop-container`).find(`.drop-header`).text(`${settings.customeheader ? settings.customeheader : 'Select Options'}`);              
@@ -247,19 +256,13 @@
                     selected.forEach(num => $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected', 'true'))
                     methods.hide()
                 })
-                $drop2_head.on('click', function (e) {
-                    const boundingBox = $(this).get(0).getBoundingClientRect();
-                    const clickX = e.clientX - boundingBox.left;
-                    const clickY = e.clientY - boundingBox.top;
-                    // Check if the click is within the pseudo-element's area
-                    if (clickX >= 0 && clickX <= boundingBox.width && clickY >= 0 && clickY <= boundingBox.height) {
-                        $jq.val('').change()
-                        selected = ['']
-                        methods.updateList()
-                    }
-                });
+                
+               
+                       
             }
         }
+
+
         //Display Cleared Value
         function dispalyValues() {
             if (isMultiple) {
