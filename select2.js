@@ -11,7 +11,7 @@
             searchMin: 5,
             showSelectedBadge: true,
             customeheader: 'Select Options',
-            countBadge: false
+            countBadge: false,
         }, options);
         var methods = {
             init: function () {
@@ -76,7 +76,7 @@
                 $jq.next().find('[data-drop2-id]').on('click', function () {
                     clickOption($(this));
                 })
-                displayMultiple($select_options);
+                settings.customeheader && isMultiple ? '' : displayMultiple($select_options);
                 if (isMultiple) {
                     badgeCount();
                 }
@@ -239,7 +239,7 @@
             if (isMultiple) {
                 $drop2_body.find(`.drop-select`).on('click', function () {
                     $jq.val(selected).change();
-                    displayMultiple($select_options)
+                    settings.customeheader && isMultiple ? '': displayMultiple($select_options);
                     methods.hide();
                     $el.trigger('drop2-select-submitted');
                     badgeCount();
