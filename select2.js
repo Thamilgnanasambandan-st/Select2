@@ -194,7 +194,6 @@
                         selected.push($(this).val())
                         selected = [...new Set(selected)]
                         $jq.next(`.drop-container`).find(`.drop-header`).append(`<span class='drop2-choice' data-key="${$(this).val()}">${$(this).text()}<span class='clear-choice' onclick="event.stopPropagation()">×</span></span> `)
-                        console.log(isMultiple && selected.length)
                     }
                 })
                 $jq.next(`.drop-container`).find(`.drop-header`).append(`${ selected.length > 0 ? "<span class='drop-clear'>&#x2715</span>" : '' }`)
@@ -202,7 +201,6 @@
                     $jq.val('').change()
                     selected = ['']
                     methods.updateList()
-                    console.log($drop2_head)
                   })
 
                 dispalyValues();
