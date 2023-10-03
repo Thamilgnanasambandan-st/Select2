@@ -1,6 +1,8 @@
 :root {
-    --theme: #fff;
+    --theme: 45,85,255;
     --text: 0,0,0; 
+    --hover: 88,150,251;
+    --selected: 221,221,221;
   }
   .drop-container{
     color: var(--text);
@@ -25,7 +27,7 @@
     justify-content: left;
     padding: 5px 10px;
     border: 1px solid;
-    border-color: rgba(var(--text), 0.8);
+    border-color: rgba(var(--theme), 0.8);
     cursor: pointer;
     font-weight: 500;
 }
@@ -35,9 +37,13 @@
 }
 
 input[data-search]{
-  border: 1px solid rgba(128, 128, 128, 0.21);
+  border: 1px solid rgba(var(--theme), 0.8);
+  color: rgba(var(--text), 0.8);
   width: 100%;
   padding: 5px 10px;
+}
+input[data-search]::placeholder{
+  color: rgba(var(--text), 0.4);
 }
 .drop-body{
   position: absolute;
@@ -53,6 +59,7 @@ input[data-search]{
 }
 .drop-body ul li{
   padding: 5px 10px;
+  color: rgba(var(--text), 1);
 }
 .drop-body li{
   display: flex;
@@ -104,12 +111,12 @@ input[data-search]{
   border-top: 1px solid rgba(var(--text), 0.1);
 }
 .drop-body ul li:hover{
-  background-color: #5896fb9f;
+  background-color: rgba(var(--hover), 0.8);
   cursor: pointer;
   color: #fff;
 }
 .drop-select{
-  background-color: #5897fb;
+  background-color: rgba(var(--theme), 1);
   padding: 2px 8px;
   cursor: pointer;
   color: #fff;
@@ -122,13 +129,14 @@ input[data-search]{
   margin-right: 15px;
   cursor: pointer;
   border-radius: 4px;
+  color: rgba(var(--text), 1);
   width: 62px;
   text-align: center;
 
 }
 
 .drop-hover{
-  background-color: #5896fb75 !important;
+  background-color: rgba(var(--hover), 0.4) !important;
   cursor: pointer;
   color: #fff;
 }
@@ -147,7 +155,8 @@ margin-left: 5px;
 cursor: pointer;
 }
 [drop-selected='true']{
-  background: #ddd;
+  background: rgba(var(--selected), 1);
+  color: rgba(var(--text), 1);
 }
 .drop-body[drop-render='hide']{
   display: none;
@@ -156,7 +165,7 @@ cursor: pointer;
   display: block;
 }
 .multiselect-drop .drop-header{
-  color: rgba(var(--text), 0.5);
+  color: rgba(var(--text), 0.4);
   font-weight: normal;
 }
 
