@@ -205,10 +205,10 @@
 
                 dispalyValues();
             } else if (isMultiple) {
-                $jq.next(`.drop-container`).find(`.drop-header`).text(`${settings.customeheader ? settings.customeheader : 'Select Options'}`);              
+                $drop2_head.text(`${settings.customeheader ? settings.customeheader : 'Select Options'}`);              
             } else if (!isMultiple) {
                 var selected_data = $el.find(`[value=${$el.val()}]`).text();
-                $jq.next(`.drop-container`).find(`.drop-header`).text(selected_data)
+                $drop2_head.text(selected_data)
             }
         }
         // All key events
@@ -309,7 +309,7 @@
                 }
                 else {
                     $jq.val(target.attr('data-key')).change();
-                    $drop2_head.text(target.text())
+                    $drop2_head.text(target.children('span:first-child').text())
                     methods.hide()
                 }
             }
