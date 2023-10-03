@@ -29,7 +29,7 @@
                         setTimeout(function () {
                             methods.show();
 
-                        }, 000);
+                        }, 0);
 
                     } else {
                         methods.hide()
