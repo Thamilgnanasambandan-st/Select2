@@ -164,7 +164,7 @@ cursor: pointer;
 .drop-body[drop-render='show']{
   display: block;
 }
-.multiselect-drop .drop-header{
+.multiselect-drop .drop-header:not(.drop-custom-header){
   color: rgba(var(--text), 0.4);
   font-weight: normal;
 }
