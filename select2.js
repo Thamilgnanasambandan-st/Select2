@@ -196,20 +196,25 @@
                     }
                 })
                 settings.customeheader ? '' : $jq.next(`.drop-container`).find(`.drop-header`).append(`${selected.length > 0 ? "<span class='drop-clear'>&#x2715</span>" : ''}`);
-                var drop_clear = settings.customeheader ? $drop2_body : $drop2_head
-                drop_clear.find('.drop-clear').on('click', function () {
-                    $jq.val('').change()
-                    selected = ['']
-                    methods.updateList()
-                    methods.hide()
-                })
+                clearAll()
                 dispalyValues();
             } else if (isMultiple) {
                 $drop2_head.text(`${settings.customeheader ? settings.customeheader : 'Select Options'}`);
+                clearAll()
             } else if (!isMultiple) {
                 var selected_data = $el.find(`[value=${$el.val()}]`).text();
                 $drop2_head.text(selected_data)
             }
+        }
+
+        function clearAll(){
+            var drop_clear = settings.customeheader ? $drop2_body : $drop2_head
+            drop_clear.find('.drop-clear').on('click', function () {
+                $jq.val('').change()
+                selected = ['']
+                methods.updateList()
+                methods.hide()
+            })
         }
         // All key events
         function keyEvents() {
