@@ -83,6 +83,7 @@
             },
             // Show methods
             show: function () {
+                $el.trigger('drop2-select-show');
                 $drop2_body.attr('drop-render', 'show');
                 $drop2_body.find('input[data-search]').focus();
                 $drop2_list_body.scrollTop(0);
@@ -97,6 +98,7 @@
             },
             // Hide methods
             hide: function () {
+                $el.trigger('drop2-select-hide');
                 $drop2_body.attr('drop-render', 'hide');
             },
             // Add more methods as needed...
