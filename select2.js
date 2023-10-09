@@ -310,6 +310,7 @@
                 }
                 else {
                     $jq.val(target.attr('data-key')).change();
+                    $el.trigger('drop2-select-submitted');
                     $drop2_head.text(target.children('span:first-child').text())
                     methods.hide()
                 }

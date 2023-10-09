@@ -106,12 +106,18 @@
             });
             $('.car').drop2();
             $('[data-drop="car"]').drop2({
-                searchMin: 2
-            });
+                searchMin: 2,
+                customeheader :' <i class="fa-solid fa-download"></i> Select User',
 
-            $(document).on('drop2-select-submitted', '#car', function(){
+            });
+            $(document).on('drop2-select-show', '#car', function(){
                 console.log('trigerrred - S');
                 console.log($('#car').val());
+                console.log('trigerrred - E');
+            })
+            $(document).on('drop2-select-submitted', '[data-drop="car"]', function(){
+                console.log('trigerrred - S');
+                console.log($('[data-drop="car"]').val());
                 console.log('trigerrred - E');
             })
         });
