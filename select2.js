@@ -220,20 +220,22 @@
         }
         // All key events
         function keyEvents() {
+           
             $(document).on("keydown", function (event) {
+                let list_height = parseInt($drop2_list.css("height"), 10)
                 let currentIndex = $drop2_list_body.find('.drop-hover').attr('data-drop2-id');
                 if ($drop2_body.attr('drop-render') == 'show') {
                     if ((event.keyCode === 40) && (($drop2_list_body.find('li:not(.hidden)').length) - 1) > currentIndex) { //Downarrow
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).removeClass('drop-hover');
-                        $drop2_list_body.scrollTop(34 * (currentIndex - (settings.options - 1)));
+                        $drop2_list_body.scrollTop(list_height * (currentIndex - (settings.options - 1)));
                         currentIndex++;
-                        $drop2_list_body.scrollTop(34 * (currentIndex - (settings.options - 1)));
+                        $drop2_list_body.scrollTop(list_height * (currentIndex - (settings.options - 1)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
                     }
                     else if ((event.keyCode === 38) && (currentIndex > 0)) { //Uparrow
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).removeClass('drop-hover');
                         currentIndex--;
-                        $drop2_list_body.scrollTop(34 * (currentIndex - (settings.options - 1)));
+                        $drop2_list_body.scrollTop(list_height * (currentIndex - (settings.options - 1)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
                     } else
                         if (event.keyCode === 13) {
