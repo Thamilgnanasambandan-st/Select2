@@ -213,9 +213,11 @@
             var drop_clear = settings.customeheader ? $drop2_body : $drop2_head
             drop_clear.find('.drop-clear').on('click', function () {
                 $jq.val('').change()
-                selected = ['']
+                selected = []
                 methods.updateList()
                 methods.hide()
+                $el.trigger('drop2-select-clear');
+
             })
         }
         // All key events

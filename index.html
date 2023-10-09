@@ -115,6 +115,11 @@
                 console.log($('#car').val());
                 console.log('trigerrred - E');
             })
+            $(document).on('drop2-select-clear', '#car', function(){
+                console.log('trigerrred - S');
+                console.log($('#car').val());
+                console.log('trigerrred - E');
+            })
             $(document).on('drop2-select-submitted', '[data-drop="car"]', function(){
                 console.log('trigerrred - S');
                 console.log($('[data-drop="car"]').val());
