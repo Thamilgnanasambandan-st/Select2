@@ -70,6 +70,7 @@
                     listElement.append(htTag);
                     $drop2_list_body.append(listElement)
                 });
+                $drop2_list_body.find('li').length ? $drop2_body.removeClass('drop-no-data') : $drop2_body.addClass('drop-no-data')
                 // Select option default selected 
                 $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
                 // createIndex('sample');
@@ -174,9 +175,11 @@
                         // If the search term is not found in the text
                         $(this).addClass('hidden');
                         $(this).hide();// Hide the list item
-                      if($drop2_list.length == $drop2_body.find('li.hidden').length){
-                       $drop2_body.toggleClass('drop-no-data')
-                      }
+                        if($drop2_list.length == $drop2_body.find('li.hidden').length){
+                            $drop2_body.addClass('drop-no-data')
+                        }else{
+                            $drop2_body.removeClass('drop-no-data')
+                        }
                  
                     } else {
                         $(this).removeClass('hidden');
