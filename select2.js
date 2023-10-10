@@ -187,7 +187,6 @@
         }
         //Display Selected values at Dropdown Head
         function displayMultiple($select_options) {
-
             if (isMultiple && $select_options.is(':selected')) {
                 settings.customeheader ? '' : $jq.next(`.drop-container`).find(`.drop-header`).text('');
                 $select_options.each(function (index) {
@@ -200,7 +199,9 @@
                 settings.customeheader ? '' : $jq.next(`.drop-container`).find(`.drop-header`).append(`${selected.length > 0 ? "<span class='drop-clear'>&#x2715</span>" : ''}`);
                 clearAll()
                 dispalyValues();
+                console.log(settings.customeheader)
             } else if (isMultiple) {
+                
                 $drop2_head.html(`${settings.customeheader ? settings.customeheader : 'Select Options'}`);
                 clearAll()
             } else if (!isMultiple) {
@@ -237,7 +238,7 @@
                     else if ((event.keyCode === 38) && (currentIndex > 0)) { //Uparrow
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).removeClass('drop-hover');
                         currentIndex--;
-                        $drop2_list_body.scrollTop(list_height * (currentIndex - (settings.options - 1)));
+                        $drop2_list_body.scrollTop(list_height * (currentIndex - (settings.options - 2)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
                     } else
                         if (event.keyCode === 13) {
