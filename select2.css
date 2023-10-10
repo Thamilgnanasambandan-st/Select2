@@ -53,6 +53,20 @@ input[data-search]::placeholder{
   min-width: 100%;
  
 }
+.drop-body.drop-no-data .search-section{
+  padding-bottom: 50px;
+}
+.drop-body.drop-no-data::after {
+  content: 'No Data Found';
+  text-align: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top:50px;
+  font-size: 14px;
+}
 .drop-body ul{
   max-height: 204px;
   overflow: auto;

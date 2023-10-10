@@ -174,6 +174,10 @@
                         // If the search term is not found in the text
                         $(this).addClass('hidden');
                         $(this).hide();// Hide the list item
+                      if($drop2_list.length == $drop2_body.find('li.hidden').length){
+                       $drop2_body.toggleClass('drop-no-data')
+                      }
+                 
                     } else {
                         $(this).removeClass('hidden');
                         // Show the list item
