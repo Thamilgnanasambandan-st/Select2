@@ -20,7 +20,7 @@
                 var x = settings.customeheader ? "<a class='drop-clear'>Clear</a>" : '';
                 $el.after(`<div class='drop-container ${$el.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'><ul></ul>${$el.attr('multiple') ? "<div class='drop-action-btn'>" + x + "<a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div>`)
                 component()
-                //Crate drop list 
+                //Crate drop list
                 methods.updateList();
                 searchOptions($drop2_body);
                 //Open drop while click header
@@ -37,7 +37,7 @@
                 })
                 var selected_data = $($el).children("option:selected").attr('data-drop2-id')
                 $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).prop('drop-selected', true);
-                // Create events and functionality 
+                // Create events and functionality
                 keyEvents()
                 // Close dropdown while click outside
                 $(document).on("click", function (event) {
@@ -47,7 +47,7 @@
                     }
                 })
             },
-            //Crate drop list 
+            //Crate drop list
             updateList: function () {
                 component()
                 $drop2_list_body.html(' ');
@@ -71,7 +71,7 @@
                     $drop2_list_body.append(listElement)
                 });
                 $drop2_list_body.find('li').length ? $drop2_body.removeClass('drop-no-data') : $drop2_body.addClass('drop-no-data')
-                // Select option default selected 
+                // Select option default selected
                 $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
                 // createIndex('sample');
                 $jq.next().find('[data-drop2-id]').on('click', function () {
@@ -180,7 +180,7 @@
                         }else{
                             $drop2_body.removeClass('drop-no-data')
                         }
-                 
+
                     } else {
                         $(this).removeClass('hidden');
                         // Show the list item
@@ -189,6 +189,11 @@
                 });
                 if (!((event.keyCode === 40) || (event.keyCode === 38 || event.keyCode === 13))) {
                     createIndex('search');
+                }
+                if($drop2_list.length == $drop2_body.find('li.hidden').length){
+                    $drop2_body.addClass('drop-no-data')
+                }else{
+                    $drop2_body.removeClass('drop-no-data')
                 }
             });
         }
@@ -208,7 +213,7 @@
                 dispalyValues();
                 console.log(settings.customeheader)
             } else if (isMultiple) {
-                
+
                 $drop2_head.html(`${settings.customeheader ? settings.customeheader : 'Select Options'}`);
                 clearAll()
             } else if (!isMultiple) {
@@ -230,7 +235,7 @@
         }
         // All key events
         function keyEvents() {
-           
+
             $(document).on("keydown", function (event) {
                 let list_height = parseInt($drop2_list.css("height"), 10)
                 let currentIndex = $drop2_list_body.find('.drop-hover').attr('data-drop2-id');
@@ -248,10 +253,10 @@
                         $drop2_list_body.scrollTop(list_height * (currentIndex - (settings.options - 2)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
                     } else
-                        if (event.keyCode === 13) {
-                            var target = $drop2_list_body.find(".drop-hover")
-                            clickOption(target)
-                        }
+                    if (event.keyCode === 13) {
+                        var target = $drop2_list_body.find(".drop-hover")
+                        clickOption(target)
+                    }
                 }
             })
             if (isMultiple) {
