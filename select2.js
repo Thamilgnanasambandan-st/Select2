@@ -100,6 +100,11 @@
             // Hide methods
             hide: function () {
                 $el.trigger('drop2-select-hide');
+                $jq.next(`.drop-container`).find('input[data-search]').val('')
+                $drop2_body.removeClass('drop-no-data')
+                $drop2_body.find('.hidden').each(function(){
+                    $(this).removeClass('hidden').show()
+                })
                 $drop2_body.attr('drop-render', 'hide');
             },
             // Add more methods as needed...
