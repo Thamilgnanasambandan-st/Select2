@@ -18,63 +18,115 @@
 </head>
 
 <body>
+    
     <div class="flex w-full items-center justify-center pt-10">
         <div>
-            <p class="mb-3">This is Multislect</p>
+            <p class="mb-3 ">This is Multislect</p>
             <select name="cars" id="car" multiple>
-                <option >Volvo-1</option>
-                <option >Saab-1</option>
-                <option >Opel-1</option>
-                <option >Audi-1</option>
-                <option selected>Volvo-1</option>
-                <option selected>Saab-1</option>
-                <option >Opel-1</option>
-                <option >Audi-1</option>
-                <option >Volvo-1</option>
-                <option >Saab-1</option>
-                <option >Opel-1</option>
-                <option >Audi-1</option>
-                <option >Volvo-1</option>
-                <option >Saab-1</option>
-                <option >Opel-1</option>
-                <option >Audi-1</option>
+                <option value="v1" data-badge='[{"badgeContent": "No-1","badgeColor": "#fcfcfc"},{"badgeContent": "No-1.1", "badgeClass":"testClass"}]' >Volvo-1</option>
+                <option value="s1" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' selected >Saab-1</option>
+                <option value="o1" data-badge='[{"badgeContent": "No-3","badgeColor": "#fcfcfc"}]' selected>Opel-1</option>
+                <option value="a1" data-badge='[{"badgeContent": "No-4","badgeColor": "#e2f1f3"}]' selected>Audi-1</option>
+                <option value="v2" data-badge='[{"badgeContent": "No-5","badgeColor": "#fcfcfc"}]' >Volvo-1</option>
+                <option value="s2" data-badge='[{"badgeContent": "No-6","badgeColor": "#e2f1f3"}]' >Saab-1</option>
+                <option value="o2" data-badge='[{"badgeContent": "No-7","badgeColor": "#fcfcfc"}]' >Opel-1</option>
+                <option value="a3" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Audi-1</option>
+                <option value="v3" data-badge='[{"badgeContent": "No-2","badgeColor": "#fcfcfc"}]' >Volvo-1</option>
+                <option value="s4" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Saab-1</option>
+                <option value="o4" data-badge='[{"badgeContent": "No-2","badgeColor": "#fcfcfc"}]' >Opel-1</option>
+                <option value="a5" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Audi-1</option>
+                <option value="v5" data-badge='[{"badgeContent": "No-2","badgeColor": "#fcfcfc"}]' >Volvo-1</option>
+                <option value="s5" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Saab-1</option>
+                <option value="o6" data-badge='[{"badgeContent": "No-2","badgeColor": "#fcfcfc"}]' >Opel-1</option>
+                <option value="a6" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Audi-1</option>
+            </select>
+        </div>
+        <div class="ml-10">
+            <p class="mb-3">This is Multislect</p>
+            <select name="cars" id="car-1" multiple>
+                <option value="v1" data-badge='[{"badgeContent": "No-1","badgeColor": "#fcfcfc"},{"badgeContent": "No-1.1", "badgeClass":"testClass"}]' >Volvo-1</option>
+                <option value="s1" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' selected >Saab-1</option>
+                <option value="o1" data-badge='[{"badgeContent": "No-3","badgeColor": "#fcfcfc"}]' selected>Opel-1</option>
+                <option value="a1" data-badge='[{"badgeContent": "No-4","badgeColor": "#e2f1f3"}]' selected>Audi-1</option>
+                <option value="v2" data-badge='[{"badgeContent": "No-5","badgeColor": "#fcfcfc"}]' >Volvo-1</option>
+                <option value="s2" data-badge='[{"badgeContent": "No-6","badgeColor": "#e2f1f3"}]' >Saab-1</option>
+                <option value="o2" data-badge='[{"badgeContent": "No-7","badgeColor": "#fcfcfc"}]' >Opel-1</option>
+                <option value="a3" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Audi-1</option>
+                <option value="v3" data-badge='[{"badgeContent": "No-2","badgeColor": "#fcfcfc"}]' >Volvo-1</option>
+                <option value="s4" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Saab-1</option>
+                <option value="o4" data-badge='[{"badgeContent": "No-2","badgeColor": "#fcfcfc"}]' >Opel-1</option>
+                <option value="a5" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Audi-1</option>
+                <option value="v5" data-badge='[{"badgeContent": "No-2","badgeColor": "#fcfcfc"}]' >Volvo-1</option>
+                <option value="s5" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Saab-1</option>
+                <option value="o6" data-badge='[{"badgeContent": "No-2","badgeColor": "#fcfcfc"}]' >Opel-1</option>
+                <option value="a6" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Audi-1</option>
             </select>
         </div>
         <div class="ml-10">
             <p class="mb-3">This is Single select</p>
-            <select name="cars" class="car">
-                <option >Volvo-2</option>
-                <option selected>Saab-2</option>
-                <option >Opel-2</option>
-                <option>Audi-2</option>
+            <select name="cars" class="car" id="demo2">
+                <option value="v1" data-badge='[{"badgeContent": "No-1","badgeColor": "#fcfcfc"},{"badgeContent": "No-1.1", "badgeClass":"testClass"}]' >Volvo-1</option>
+                <option value="s1" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' selected >Saab-1</option>
+                <option value="o1" data-badge='[{"badgeContent": "No-3","badgeColor": "#fcfcfc"}]' selected>Opel-1</option>
+                <option value="a1" data-badge='[{"badgeContent": "No-4","badgeColor": "#e2f1f3"}]' selected>Audi-1</option>
+                <option value="v2" data-badge='[{"badgeContent": "No-5","badgeColor": "#fcfcfc"}]' >Volvo-1</option>
+                <option value="s2" data-badge='[{"badgeContent": "No-6","badgeColor": "#e2f1f3"}]' >Saab-1</option>
+                <option value="o2" data-badge='[{"badgeContent": "No-7","badgeColor": "#fcfcfc"}]' >Opel-1</option>
+                <option value="a3" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Audi-1</option>
+                <option value="v3" data-badge='[{"badgeContent": "No-2","badgeColor": "#fcfcfc"}]' >Volvo-1</option>
+                <option value="s4" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Saab-1</option>
+                <option value="o4" data-badge='[{"badgeContent": "No-2","badgeColor": "#fcfcfc"}]' >Opel-1</option>
+                <option value="a5" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Audi-1</option>
+                <option value="v5" data-badge='[{"badgeContent": "No-2","badgeColor": "#fcfcfc"}]' >Volvo-1</option>
+                <option value="s5" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Saab-1</option>
+                <option value="o6" data-badge='[{"badgeContent": "No-2","badgeColor": "#fcfcfc"}]' >Opel-1</option>
+                <option value="a6" data-badge='[{"badgeContent": "No-2","badgeColor": "#e2f1f3"}]' >Audi-1</option>
             </select>
         </div>
         <div class="ml-10">
             <p class="mb-3">This is Single select</p>
-            <select name="cars" data-drop="car">
-                <option >Volvo-3</option>
-                <option >Saab-3</option>
-                <option >Opel-3</option>
-                <option>Audi-3</option>
+            <select name="cars" data-drop="car" id="demo3">
+                <option value="v3" >Volvo-3</option>
+                <option  value="s3">Saab-3</option>
+                <option  value="o1">Opel-3</option>
+                <option value="a3">Audi-3</option>
             </select>
         </div>
     </div>
     <script>
         $(function () {
-            $('#car').drop2();
+            $('#car').drop2({
+                showSelectedBadge: true,
+                countBadge: true,
+                customeheader :' <i class="fa-solid fa-download"></i> Select User',
+            });
+            $('#car-1').drop2({
+                showSelectedBadge: true,
+                countBadge: true,
+            });
             $('.car').drop2();
             $('[data-drop="car"]').drop2({
-                create: function ($el) {
-                    console.log("sdgh");
-                }
+                searchMin: 2,
+                customeheader :' <i class="fa-solid fa-download"></i> Select User',
+
             });
-            $('#cars').on('drop2:select', function () {
-                // alert('select')
+            $(document).on('drop2-select-show', '#car', function(){
+                console.log('trigerrred - S');
+                console.log($('#car').val());
+                console.log('trigerrred - E');
             })
-            $('#cars').on('hidden.hub.drop2', function () {
-                alert('close')
+            $(document).on('drop2-select-clear', '#car', function(){
+                console.log('trigerrred - S');
+                console.log($('#car').val());
+                console.log('trigerrred - E');
+            })
+            $(document).on('drop2-select-submitted', '[data-drop="car"]', function(){
+                console.log('trigerrred - S');
+                console.log($('[data-drop="car"]').val());
+                console.log('trigerrred - E');
             })
         });
+      
     </script>
 </body>
 
