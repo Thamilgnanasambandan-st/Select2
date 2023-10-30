@@ -53,7 +53,7 @@
                 $drop2_list_body.html(' ');
                 $drop2_list_body.css('opacity', 0);
                 if ($select_options.length >= settings.searchMin && $drop2_body.find('input').length == 0) {
-                    $drop2_body.prepend(`<div class='search-section'><input type="text" placeholder="Search" data-search=""><div class='s-action'><a class='s-select-all'>All</a><a class='s-clear-all'>Clear</a></div></div> `)
+                    $drop2_body.prepend(`<div class='search-section'><input type="text" placeholder="Search" data-search="">${ isMultiple ? '<div class="s-action"><a class="s-select-all">All</a><a class="s-clear-all">Clear</a></div>' : ''}</div> `)
                 }
                 //To declare the search element end
                 $select_options.each(function (index) {
