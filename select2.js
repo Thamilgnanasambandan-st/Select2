@@ -53,7 +53,7 @@
                 $drop2_list_body.html(' ');
                 $drop2_list_body.css('opacity', 0);
                 if ($select_options.length >= settings.searchMin && $drop2_body.find('input').length == 0) {
-                    $drop2_body.prepend(`<div class='search-section'><input type="text" placeholder="Search" data-search="">${ isMultiple ? '<div class="s-action"><a class="s-select-all">All</a><a class="s-clear-all">Clear</a></div>' : ''}</div> `)
+                    $drop2_body.prepend(`<div class='search-section'><input type="text" placeholder="Search" data-search="">${isMultiple ? '<div class="s-action"><a class="s-select-all">All</a><a class="s-clear-all">Clear</a></div>' : ''}</div> `)
                 }
                 //To declare the search element end
                 $select_options.each(function (index) {
@@ -188,7 +188,7 @@
 
                         } else {
                             $drop2_body.removeClass('drop-no-data')
-                             $drop2_body.find('.s-action').show()
+                            $drop2_body.find('.s-action').show()
 
                         }
 
@@ -211,7 +211,6 @@
         }
 
         function searchClear() {
-
             var temp = []
             $drop2_body.find(`.s-select-all`).on('click', function () {
                 $drop2_list_body.find(`li[drop-selected = 'false']`).not('.hidden').each(function () {
@@ -219,7 +218,7 @@
                     temp.push($(this).attr('data-key'))
                 })
                 selected = selected.concat(temp)
-                temp =[]
+                temp = []
             })
             $drop2_body.find(`.s-clear-all`).on('click', function () {
                 $drop2_list_body.find(`li[drop-selected = 'true']`).not('.hidden').each(function () {
@@ -227,10 +226,9 @@
                     temp.push($(this).attr('data-key'))
                 })
                 selected = selected.filter(item => !temp.includes(item));
-                temp =[]
+                temp = []
 
             })
-
         }
         //Display Selected values at Dropdown Head
         function displayMultiple($select_options) {
@@ -265,7 +263,6 @@
                 methods.updateList()
                 methods.hide()
                 $el.trigger('drop2-select-clear');
-
             })
         }
         // All key events
