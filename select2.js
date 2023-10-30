@@ -53,7 +53,7 @@
                 $drop2_list_body.html(' ');
                 $drop2_list_body.css('opacity', 0);
                 if ($select_options.length >= settings.searchMin && $drop2_body.find('input').length == 0) {
-                    $drop2_body.prepend(`<div class='search-section'><input type="text" placeholder="Search" data-search=""></div> `)
+                    $drop2_body.prepend(`<div class='search-section'><input type="text" placeholder="Search" data-search=""><div class='s-action'><a class='s-select-all'>All</a><a class='s-clear-all'>Clear</a></div></div> `)
                 }
                 //To declare the search element end
                 $select_options.each(function (index) {
@@ -102,7 +102,7 @@
                 $el.trigger('drop2-select-hide');
                 $jq.next(`.drop-container`).find('input[data-search]').val('')
                 $drop2_body.removeClass('drop-no-data')
-                $drop2_body.find('.hidden').each(function(){
+                $drop2_body.find('.hidden').each(function () {
                     $(this).removeClass('hidden').show()
                 })
                 $drop2_body.attr('drop-render', 'hide');
@@ -171,6 +171,7 @@
         }
         //Filter Search Options
         function searchOptions(target) {
+            searchClear()
             target.find('[data-search]').on('keyup', function (event) {
                 var searchTerm = $(this).val().toLowerCase();
                 target.find(`ul li`).each(function () {
@@ -180,27 +181,53 @@
                         // If the search term is not found in the text
                         $(this).addClass('hidden');
                         $(this).hide();// Hide the list item
-                        if($drop2_list.length == $drop2_body.find('li.hidden').length){
+
+                        if ($drop2_list.length == $drop2_body.find('li.hidden').length) {
                             $drop2_body.addClass('drop-no-data')
-                        }else{
+
+                        } else {
                             $drop2_body.removeClass('drop-no-data')
+
                         }
 
                     } else {
                         $(this).removeClass('hidden');
                         // Show the list item
                         $(this).show();
+
                     }
                 });
                 if (!((event.keyCode === 40) || (event.keyCode === 38 || event.keyCode === 13))) {
                     createIndex('search');
                 }
-                if($drop2_list.length == $drop2_body.find('li.hidden').length){
+                if ($drop2_list.length == $drop2_body.find('li.hidden').length) {
                     $drop2_body.addClass('drop-no-data')
-                }else{
+                } else {
                     $drop2_body.removeClass('drop-no-data')
                 }
             });
+        }
+
+        function searchClear() {
+
+            var temp = []
+            $drop2_body.find(`.s-select-all`).on('click', function () {
+                $drop2_list_body.find(`li[drop-selected = 'false']`).not('.hidden').each(function () {
+                    $(this).attr('drop-selected', 'true');
+                    temp.push($(this).attr('data-key'))
+                })
+                selected = selected.concat(temp)
+                temp =[]
+                console.log(temp)
+            })
+            $drop2_body.find(`.s-clear-all`).on('click', function () {
+                $drop2_list_body.find(`li[drop-selected = 'true']`).not('.hidden').each(function () {
+                    $(this).attr('drop-selected', 'false');
+                    temp.push($(this).attr('data-key'))
+                })
+                selected = selected.filter(item => !temp.includes(item));
+            })
+
         }
         //Display Selected values at Dropdown Head
         function displayMultiple($select_options) {
@@ -258,10 +285,10 @@
                         $drop2_list_body.scrollTop(list_height * (currentIndex - (settings.options - 2)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
                     } else
-                    if (event.keyCode === 13) {
-                        var target = $drop2_list_body.find(".drop-hover")
-                        clickOption(target)
-                    }
+                        if (event.keyCode === 13) {
+                            var target = $drop2_list_body.find(".drop-hover")
+                            clickOption(target)
+                        }
                 }
             })
             if (isMultiple) {
@@ -281,6 +308,7 @@
                     selected = $jq.val()
                     selected.forEach(num => $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected', 'true'))
                     methods.hide()
+
                 })
             }
         }
