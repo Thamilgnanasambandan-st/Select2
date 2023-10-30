@@ -220,7 +220,6 @@
                 })
                 selected = selected.concat(temp)
                 temp =[]
-                console.log(temp)
             })
             $drop2_body.find(`.s-clear-all`).on('click', function () {
                 $drop2_list_body.find(`li[drop-selected = 'true']`).not('.hidden').each(function () {
@@ -228,6 +227,8 @@
                     temp.push($(this).attr('data-key'))
                 })
                 selected = selected.filter(item => !temp.includes(item));
+                temp =[]
+
             })
 
         }
