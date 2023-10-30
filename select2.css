@@ -82,8 +82,29 @@ input[data-search]::placeholder{
 .search-section{
   display: flex;
   padding: 5px;
+  flex-direction: column;
+  border-bottom: 0.5px solid rgba(var(--theme), 0.8);;
 }
 
+.s-action{
+  padding: 2px;
+  display: block;
+  padding-top: 5px;
+  text-align: end;
+
+}
+.s-action a{
+  font-size: 12px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+.s-clear-all{
+  border: 0.5px solid red;
+}
+.s-select-all{
+  margin-right: 5px;
+  border: 0.5px solid blue;
+}
 .drop-header.hasValue{
   padding-right: 30px;
   position: relative;
