@@ -184,9 +184,11 @@
 
                         if ($drop2_list.length == $drop2_body.find('li.hidden').length) {
                             $drop2_body.addClass('drop-no-data')
+                            $drop2_body.find('.s-action').hide()
 
                         } else {
                             $drop2_body.removeClass('drop-no-data')
+                             $drop2_body.find('.s-action').show()
 
                         }
 
