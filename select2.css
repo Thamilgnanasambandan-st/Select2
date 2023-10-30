@@ -199,3 +199,15 @@ cursor: pointer;
   text-align: center;
   position: relative;
 }
+.selected-options{
+    position: absolute;
+    left: 100%;
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+}
+.selected-options .drop2-choice{
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}

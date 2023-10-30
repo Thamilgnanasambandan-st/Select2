@@ -18,7 +18,7 @@
                 $el.addClass(`drop2-select`)
                 // Create drop conatiner and header
                 var x = settings.customeheader ? "<a class='drop-clear'>Clear</a>" : '';
-                $el.after(`<div class='drop-container ${$el.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'><ul></ul>${$el.attr('multiple') ? "<div class='drop-action-btn'>" + x + "<a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div>`)
+                $el.after(`<div class='drop-container ${$el.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'><div class='selected-options'></div><ul></ul>${$el.attr('multiple') ? "<div class='drop-action-btn'>" + x + "<a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div>`)
                 component()
                 //Crate drop list
                 methods.updateList();
@@ -206,20 +206,21 @@
         function displayMultiple($select_options) {
             if (isMultiple && $select_options.is(':selected')) {
                 settings.customeheader ? '' : $jq.next(`.drop-container`).find(`.drop-header`).text('');
+                settings.customeheader ? '' : $jq.next(`.drop-container`).find(`.selected-options`).text('');
                 $select_options.each(function (index) {
                     if ($(this).is(':selected')) {
                         selected.push($(this).val())
                         selected = [...new Set(selected)]
                         settings.customeheader ? '' : $jq.next(`.drop-container`).find(`.drop-header`).append(`<span class="drop2-choice" data-key="${$(this).val()}">${$(this).text()}<span class="clear-choice" onclick="event.stopPropagation()">×</span></span> `);
+                        settings.customeheader ? '' : $jq.next(`.drop-container`).find(`.selected-options`).append(`<span class="drop2-choice" data-key="${$(this).val()}">${$(this).text()}<span class="clear-choice" onclick="event.stopPropagation()">×</span></span> `);
                     }
                 })
                 settings.customeheader ? '' : $jq.next(`.drop-container`).find(`.drop-header`).append(`${selected.length > 0 ? "<span class='drop-clear'>&#x2715</span>" : ''}`);
                 clearAll()
                 dispalyValues();
-                console.log(settings.customeheader)
             } else if (isMultiple) {
-
                 $drop2_head.html(`${settings.customeheader ? settings.customeheader : 'Select Options'}`);
+                $jq.next(`.drop-container`).find(`.selected-options`).text('');
                 clearAll()
             } else if (!isMultiple) {
                 var selected_data = $el.find(`[value=${$el.val()}]`).text();
@@ -287,7 +288,8 @@
         //Display Cleared Value
         function dispalyValues() {
             if (isMultiple) {
-                $jq.next(`.drop-container`).find(`.drop-header`).find('.clear-choice').on('click', function () {
+                $jq.next(`.drop-container`).find(`.drop-header,.selected-options`).find('.clear-choice').on('click', function () {
+                    console.log($(this))
                     var choice_value = $(this).parent().attr('data-key')
                     selected = selected.filter(num => num != choice_value);
                     $jq.val(selected).change();
@@ -307,14 +309,17 @@
             cnt ? $drop2_head.addClass('hasValue') : $drop2_head.removeClass('hasValue')
             settings.countBadge ? $drop2_head.addClass('showCount') : $drop2_head.removeClass('showCount');
         }
-        //Here add teprory selected options
+        //Here add temporary selected options
         function listSelected(target, condition) {
             isMultiple ? '' : $el.next().find('[data-drop2-id]').attr('drop-selected', 'false');
             if (isMultiple && (condition === 'true')) {
                 target.attr('drop-selected', 'false');
+                $jq.next(`.drop-container`).find(`.selected-options`).find(`span[data-key="${$(target).attr('data-key')}"]`).remove()
             }
             else {
                 target.attr('drop-selected', 'true');
+                $jq.next(`.drop-container`).find(`.selected-options`).append(`<span class="drop2-choice" data-key="${$(target).attr('data-key')}">${$(target).children('span:first-child').text()}<span class="clear-choice" onclick="event.stopPropagation()">×</span></span> `);
+                // dispalyValues()
             }
         }
         function clickOption(target) {
