@@ -224,7 +224,7 @@
                 $drop2_list_body.find(`li[drop-selected = 'false']`).not('.hidden').each(function () {
                     $(this).attr('drop-selected', 'true');
                     temp.push($(this).attr('data-key'))
-                     settings.selectedDrawer ?  $jq.next(`.drop-container`).find(`.selected-options`).append(`<span class="drop2-choice" data-key="${$(this).attr('data-key')}">${$(this).text()}<span class="clear-choice" onclick="event.stopPropagation()">×</span></span> `): '';
+                     settings.selectedDrawer ?  $jq.next(`.drop-container`).find(`.selected-options`).append(`<span class="drop2-choice" data-key="${$(this).attr('data-key')}">${$(this).children('span:first-child').text()}<span class="clear-choice" onclick="event.stopPropagation()">×</span></span> `): '';
                 })
                 selected = selected.concat(temp)
                 temp = []
