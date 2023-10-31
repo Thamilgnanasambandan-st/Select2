@@ -214,12 +214,16 @@
 
         function searchClear() {
             var temp = []
-            $jq.next(`.drop-container`).find(`.selected-options`).find('.clear-choice').on('click', function () {
-                $(this).parent().remove();
-                var unselected = $drop2_list_body.find(`li[data-key='${$(this).parent().attr('data-key')}']`)
-                 unselected.attr('drop-selected', 'false');
-                selected = selected.filter(item => item !== $(this).parent().attr('data-key'))
-            })
+            clearOptions()
+            function clearOptions(){
+                $jq.next(`.drop-container`).find(`.selected-options`).find('.clear-choice').on('click', function () {
+                    $(this).parent().remove();
+                    var unselected = $drop2_list_body.find(`li[data-key='${$(this).parent().attr('data-key')}']`)
+                     unselected.attr('drop-selected', 'false');
+                    selected = selected.filter(item => item !== $(this).parent().attr('data-key'))
+                })
+            }
+          
             $drop2_body.find(`.s-select-all`).on('click', function () {
                 $drop2_list_body.find(`li[drop-selected = 'false']`).not('.hidden').each(function () {
                     $(this).attr('drop-selected', 'true');
@@ -229,12 +233,7 @@
                 selected = selected.concat(temp)
                 temp = []
                 
-                $jq.next(`.drop-container`).find(`.selected-options`).find('.clear-choice').on('click', function () {
-                    $(this).parent().remove();
-                    var unselected = $drop2_list_body.find(`li[data-key='${$(this).parent().attr('data-key')}']`)
-                     unselected.attr('drop-selected', 'false');
-                    selected = selected.filter(item => item !== $(this).parent().attr('data-key'))
-                })
+                clearOptions()
             })
             $drop2_body.find(`.s-clear-all`).on('click', function () {
                 $drop2_list_body.find(`li[drop-selected = 'true']`).not('.hidden').each(function () {
