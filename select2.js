@@ -308,18 +308,17 @@
                     methods.hide();
                     $el.trigger('drop2-select-submitted');
                     badgeCount();
-                    console.log(selected)
                 })
                 $drop2_body.find(`.drop-cancel`).on('click', function () {
                     let difference = selected.filter(x => !$jq.val().includes(x));
                     difference.forEach(num => {
                         var a = $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected')
                         $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected', !a)
+                        $jq.next(`.drop-container`).find(`.selected-options span[data-key=${num}]`).remove()
                     });
                     selected = $jq.val()
                     selected.forEach(num => $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected', 'true'))
                     methods.hide()
-                    console.log(selected)
 
                 })
             }
