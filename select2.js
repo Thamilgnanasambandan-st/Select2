@@ -228,6 +228,13 @@
                 })
                 selected = selected.concat(temp)
                 temp = []
+                
+                $jq.next(`.drop-container`).find(`.selected-options`).find('.clear-choice').on('click', function () {
+                    $(this).parent().remove();
+                    var unselected = $drop2_list_body.find(`li[data-key='${$(this).parent().attr('data-key')}']`)
+                     unselected.attr('drop-selected', 'false');
+                    selected = selected.filter(item => item !== $(this).parent().attr('data-key'))
+                })
             })
             $drop2_body.find(`.s-clear-all`).on('click', function () {
                 $drop2_list_body.find(`li[drop-selected = 'true']`).not('.hidden').each(function () {
@@ -308,6 +315,8 @@
                     methods.hide();
                     $el.trigger('drop2-select-submitted');
                     badgeCount();
+                    searchClear()
+
                 })
                 $drop2_body.find(`.drop-cancel`).on('click', function () {
                     let difference = selected.filter(x => !$jq.val().includes(x));
@@ -317,9 +326,13 @@
                         $jq.next(`.drop-container`).find(`.selected-options span[data-key=${num}]`).remove()
                     });
                     selected = $jq.val()
-                    selected.forEach(num => $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected', 'true'))
+                    $jq.next(`.drop-container`).find(`.selected-options`).html('');
+                    selected.forEach(num => {
+                        $drop2_list_body.find(`[data-key=${num}]`).attr('drop-selected', 'true');
+                        $jq.next(`.drop-container`).find(`.selected-options`).append(`<span class="drop2-choice" data-key="${num}">${$drop2_list_body.find(`[data-key=${num}]`).children('span:first-child').text()}<span class="clear-choice" onclick="event.stopPropagation()">×</span></span> `)
+                    })
                     methods.hide()
-
+                    searchClear()
                 })
             }
         }
