@@ -226,7 +226,6 @@
                     selected = selected.filter(item => item !== $(this).parent().attr('data-key'))
                 })
             }
-
             $drop2_body.find(`.s-select-all`).on('click', function () {
                 $drop2_list_body.find(`li[drop-selected = 'false']`).not('.hidden').each(function () {
                     $(this).attr('drop-selected', 'true');
@@ -235,7 +234,6 @@
                 })
                 selected = selected.concat(temp)
                 temp = []
-
                 clearOptions()
             })
             $drop2_body.find(`.s-clear-all`).on('click', function () {
@@ -290,7 +288,6 @@
 
         // All key events
         function keyEvents() {
-
             $(document).on("keydown", function (event) {
                 let list_height = parseInt($drop2_list.css("height"), 10)
                 let currentIndex = $drop2_list_body.find('.drop-hover').attr('data-drop2-id');
