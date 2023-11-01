@@ -113,7 +113,7 @@
             // Add more methods as needed...
         };
 
-        //Assign common variables
+        // Assign common variables
         function component() {
             // assign variables and names
             $select_options = $jq.children('option')
@@ -123,7 +123,7 @@
             $drop2_search = $jq.next(`.drop-container`).find('input[data-search]');
         }
 
-        //Create list options index
+        // Create list options index
         function createIndex(data) {
             let count = 0;
             $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
@@ -138,7 +138,7 @@
             $drop2_list_body.find('[data-drop2-id="0"]').addClass('drop-hover')
         }
 
-        //Limit dropdown Height
+        // Limit dropdown Height
         function dropdownHeight(targetList) {
             let c = 0;
             let he = 0;
@@ -157,7 +157,7 @@
             });
         }
 
-        //Assign Badges
+        // Assign Badges
         function badgeHtml(data) {
             if (data) {
                 let js = JSON.parse(data);
@@ -177,7 +177,7 @@
             }
         }
 
-        //Filter Search Options
+        // Filter Search Options
         function searchOptions(target) {
             target.find('[data-search]').on('keyup', function (event) {
                 var searchTerm = $(this).val().toLowerCase();
@@ -215,6 +215,7 @@
             });
         }
 
+        // Select or Deselect All Searched options 
         function searchClear() {
             var temp = []
             clearOptions()
@@ -274,7 +275,7 @@
             }
         }
 
-
+        // Reset Options
         function clearAll() {
             var drop_clear = settings.customeheader ? $drop2_body : $drop2_head
             drop_clear.find('.drop-clear').on('click', function () {
@@ -314,6 +315,7 @@
             actionEvent()
         }
 
+        // Submit and Cancel Buttons Actions
         function actionEvent() {
             if (isMultiple) {
                 $drop2_body.find(`.drop-select`).on('click', function () {
@@ -344,7 +346,7 @@
             }
         }
 
-        //Display Cleared Value
+        // Clear Displayed Values
         function dispalyValues() {
             if (isMultiple) {
                 $jq.next(`.drop-container`).find(`.drop-header`).find('.clear-choice').on('click', function () {
@@ -362,7 +364,7 @@
             }
         }
 
-        //Display Counts
+        // Display Counts
         function badgeCount() {
             let cnt = $jq.val().length;
             $drop2_head.attr('count', $jq.val().length);
@@ -370,20 +372,7 @@
             settings.countBadge || $drop2_head.hasClass('showCount') ? $drop2_head.addClass('showCount') : $drop2_head.removeClass('showCount');
         }
 
-        //Here add temporary selected options
-        function listSelected(target, condition) {
-            isMultiple ? '' : $el.next().find('[data-drop2-id]').attr('drop-selected', 'false');
-            if (isMultiple && (condition === 'true')) {
-                target.attr('drop-selected', 'false');
-                $jq.next(`.drop-container`).find(`.selected-options`).find(`span[data-key="${$(target).attr('data-key')}"]`).remove()
-            }
-            else {
-                target.attr('drop-selected', 'true');
-                (settings.selectedDrawer && isMultiple) || ($drop2_body.children().hasClass('selected-options') && isMultiple) ? $jq.next(`.drop-container`).find(`.selected-options`).append(`<span class="drop2-choice" data-key="${$(target).attr('data-key')}">${$(target).children('span:first-child').text()}<span class="clear-choice" onclick="event.stopPropagation()">×</span></span> `) : '';
-                dispalyValues()
-            }
-        }
-
+        // Selecting Options and Update Attributes
         function clickOption(target) {
             let currentListSelected = target.attr('drop-selected');
             listSelected(target, currentListSelected)
@@ -409,9 +398,23 @@
                     methods.hide()
                 }
             }
-
             actionEvent()
         }
+
+        // Here add temporary selected options
+        function listSelected(target, condition) {
+            isMultiple ? '' : $el.next().find('[data-drop2-id]').attr('drop-selected', 'false');
+            if (isMultiple && (condition === 'true')) {
+                target.attr('drop-selected', 'false');
+                $jq.next(`.drop-container`).find(`.selected-options`).find(`span[data-key="${$(target).attr('data-key')}"]`).remove()
+            }
+            else {
+                target.attr('drop-selected', 'true');
+                (settings.selectedDrawer && isMultiple) || ($drop2_body.children().hasClass('selected-options') && isMultiple) ? $jq.next(`.drop-container`).find(`.selected-options`).append(`<span class="drop2-choice" data-key="${$(target).attr('data-key')}">${$(target).children('span:first-child').text()}<span class="clear-choice" onclick="event.stopPropagation()">×</span></span> `) : '';
+                dispalyValues()
+            }
+        }
+
 
         return this.each(function () {
             var $el = $(this);
