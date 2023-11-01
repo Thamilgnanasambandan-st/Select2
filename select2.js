@@ -228,6 +228,7 @@
 
                     } else {
                         $(this).removeClass('hidden');
+                        $drop2_body.find('.s-action').show()
                         // Show the list item
                         $(this).show();
                     }
