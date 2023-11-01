@@ -16,10 +16,10 @@
         var methods = {
             init: function () {
                 $el = $jq
-                $el.addClass(`drop2-select`)
+                $jq.addClass(`drop2-select`)
                 // Create drop conatiner and header
                 var x = settings.customeheader ? "<a class='drop-clear'>Clear</a>" : '';
-                $el.after(`<div class='drop-container ${$el.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${ settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'><div class='${ settings.selectedDrawer ? 'selected-options' : '' }'></div><ul></ul>${$el.attr('multiple') ? "<div class='drop-action-btn'>" + x + "<a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div>`)
+                $jq.after(`<div class='drop-container ${$jq.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${ settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'><div class='${ settings.selectedDrawer ? 'selected-options' : '' }'></div><ul></ul>${$jq.attr('multiple') ? "<div class='drop-action-btn'>" + x + "<a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div>`)
                 component()
                 //Crate drop list
                 methods.updateList();
@@ -36,8 +36,8 @@
                         methods.hide()
                     }
                 })
-                var selected_data = $($el).children("option:selected").attr('data-drop2-id')
-                $($el).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).prop('drop-selected', true);
+                var selected_data = $($jq).children("option:selected").attr('data-drop2-id')
+                $($jq).next(`.drop-container`).find(`.drop-body ul li[data-drop2-id='${selected_data}']`).prop('drop-selected', true);
                 // Create events and functionality
                 keyEvents()
                 // Close dropdown while click outside
@@ -73,7 +73,7 @@
                 });
                 $drop2_list_body.find('li').length ? $drop2_body.removeClass('drop-no-data') : $drop2_body.addClass('drop-no-data')
                 // Select option default selected
-                $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
+                $drop2_list = $($jq).next(`.drop-container`).find(`.drop-body ul li`)
                 // createIndex('sample');
                 $jq.next().find('[data-drop2-id]').on('click', function () {
                     clickOption($(this));
@@ -166,7 +166,7 @@
         // Create list options index
         function createIndex(data) {
             let count = 0;
-            $drop2_list = $($el).next(`.drop-container`).find(`.drop-body ul li`)
+            $drop2_list = $($jq).next(`.drop-container`).find(`.drop-body ul li`)
             $drop2_list.attr('data-drop2-id', '')
             $drop2_list.removeClass('drop-hover');
             $drop2_list.each(function (index) {
@@ -329,7 +329,7 @@
                 $jq.next(`.drop-container`).find(`.selected-options`).text('');
                 clearAll()
             } else if (!isMultiple) {
-                var selected_data = $el.find(`[value=${$el.val()}]`).text();
+                var selected_data = $jq.find(`[value=${$jq.val()}]`).text();
                 $drop2_head.text(selected_data)
             }
         }
@@ -375,7 +375,7 @@
 
         // Here add temporary selected options
         function listSelected(target, condition) {
-            isMultiple ? '' : $el.next().find('[data-drop2-id]').attr('drop-selected', 'false');
+            isMultiple ? '' : $jq.next().find('[data-drop2-id]').attr('drop-selected', 'false');
             if (isMultiple && (condition === 'true')) {
                 target.attr('drop-selected', 'false');
                 $jq.next(`.drop-container`).find(`.selected-options`).find(`span[data-key="${$(target).attr('data-key')}"]`).remove()
@@ -412,11 +412,11 @@
         }
 
         return this.each(function () {
-            var $el = $(this);
+            var $jq = $(this);
             if (methods[options]) {
-                $select_options = $($el).children('option')
+                $select_options = $($jq).children('option')
                 $drop2_body = $jq.next(`.drop-container`).find(`.drop-body`)
-                $drop2_list_body = $($el).next(`.drop-container`).find(`.drop-body ul`)
+                $drop2_list_body = $($jq).next(`.drop-container`).find(`.drop-body ul`)
                 // If a option with the provided name exists, call it with the given parameters
                 return methods[options].apply(this);
             } else if (typeof options === 'object' || !options) {
