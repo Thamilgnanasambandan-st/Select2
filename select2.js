@@ -18,8 +18,7 @@
                 $el = $jq
                 $jq.addClass(`drop2-select`)
                 // Create drop conatiner and header
-                var x = settings.customeheader ? "<a class='drop-clear'>Clear</a>" : '';
-                $jq.after(`<div class='drop-container ${$jq.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${ settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'><div class='${ settings.selectedDrawer ? 'selected-options' : '' }'></div><ul></ul>${$jq.attr('multiple') ? "<div class='drop-action-btn'>" + x + "<a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div>`)
+                $jq.after(`<div class='drop-container ${$jq.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${ settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'><div class='${ settings.selectedDrawer ? 'selected-options' : '' }'></div><ul></ul>${$jq.attr('multiple') ? "<div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div>`)
                 component()
                 //Crate drop list
                 methods.updateList();
