@@ -1,14 +1,30 @@
 # Drop2 Features
 
 - single select dropdown
-- multi select dropdown
+- Multi-select dropdown
 - search dropdown list
 - arrows keys support
-- limit number of items displayed in dropdown
+- limit the number of items displayed in a dropdown
 - custom sort
-- angular forms support
-- angular v4 and above supported
-- cross browser support
-- custom template options
+- Listed items in separate boxes
+- Custom header and Placeholder and icons 
+- Select all and Clear all options 
+- Action Buttons like Submit and Cancel
+- Custom themes
+- Badges like count
+
+
+## Example
+
+Demo
+
+## Installation
+
+https://github.com/Thamilgnanasambandan-st/Select2
+
+## Initilization 
+
+$('#demo').drop2()
+
 
 
