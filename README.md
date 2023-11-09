@@ -32,7 +32,7 @@ $('#demo').drop2()
 
 Show selected options count
 
-type: boolean
+type: boolean<br>
 default: false
 
 Example:
