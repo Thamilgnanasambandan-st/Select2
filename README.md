@@ -85,7 +85,7 @@ $('#demo').drop2({
 });
 ```
 
-## Eveents 
+## Events 
 
 #### `open`
 
