@@ -36,9 +36,14 @@ type: boolean<br>
 default: false
 
 Example:
-
+Example:  
+```js
 $('#demo').drop2({
     showSelectedBadge: true
 });
+```
+
+
+
 
 
