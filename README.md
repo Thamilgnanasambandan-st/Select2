@@ -26,5 +26,19 @@ https://github.com/Thamilgnanasambandan-st/Select2
 
 $('#demo').drop2()
 
+## Options
+
+### Badge
+
+Show selected options count
+
+type: boolean
+default: false
+
+Example:
+
+$('#demo').drop2({
+    showSelectedBadge: true
+});
 
 
