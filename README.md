@@ -32,18 +32,58 @@ $('#demo').drop2()
 
 Show selected options count
 
-type: boolean<br>
-default: false
+**type**: `boolean`  
+**default**: `false`  
 
 Example:
 Example:  
 ```js
 $('#demo').drop2({
-    showSelectedBadge: true
+    countBadge: true
 });
 ```
 
+### Selected Drawer
 
+Show Selected options separately 
+
+**type**: `boolean`  
+**default**: `false`  
+
+Example:  
+```js
+$('#demo').drop2({
+    selectedDrawer: true
+});
+```
+
+### Custom Header 
+
+We can define custom headers with icons but its not placeholder 
+
+**type**: `boolean`  
+**default**: `false`  
+
+Example:  
+```js
+$('#demo').drop2({
+    customeheader :' <i class="fa-solid fa-download"></i> Select User',
+});
+```
+
+### Options show
+
+This is define number of items shows in drawer 
+
+**type**: `Number`  
+**default**: `5`  
+
+Example:  
+```js
+$('#demo').drop2({
+    customeheader :' <i class="fa-solid fa-download"></i> Select User',
+});
+```
 
 
 
