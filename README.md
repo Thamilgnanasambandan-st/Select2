@@ -28,7 +28,7 @@ $('#demo').drop2()
 
 ## Options
 
-### Badge
+#### Badge
 
 Show selected options count
 
@@ -43,7 +43,7 @@ $('#demo').drop2({
 });
 ```
 
-### Selected Drawer
+#### Selected Drawer
 
 Show Selected options separately 
 
@@ -57,7 +57,7 @@ $('#demo').drop2({
 });
 ```
 
-### Custom Header 
+#### Custom Header 
 
 We can define custom headers with icons but its not placeholder 
 
@@ -71,7 +71,7 @@ $('#demo').drop2({
 });
 ```
 
-### Options show
+#### Options show
 
 This is define number of items shows in drawer 
 
