@@ -8,7 +8,6 @@
         var settings = $.extend({
             options: 5,
             searchMin: 5,
-            showSelectedBadge: true,
             customeheader: false,
             countBadge: false,
             selectedDrawer: false,
