@@ -85,5 +85,40 @@ $('#demo').drop2({
 });
 ```
 
+## Eveents 
+
+#### `open`
+
+triggers when drop2 is open 
+
+Example:  
+```js
+$(document).on('drop2-select-show', '#demo, function(){
+   console.log('trigerrred - S');
+});
+```
+
+#### `hide`
+
+triggers when drop2 is close
+
+Example:  
+```js
+$(document).on('drop2-select-hide', '#demo, function(){
+   console.log('trigerrred - H');
+});
+```
+
+
+#### `Submit` 
+
+triggers when drop2 multiple options submitted 
+
+Example:  
+```js
+$(document).on('drop2-select-submitted', '#demo, function(){
+   console.log('trigerrred - H');
+});
+```
 
 
