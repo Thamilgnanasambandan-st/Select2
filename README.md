@@ -116,7 +116,7 @@ triggers when drop2 multiple options submitted
 
 Example:  
 ```js
-$(document).on('drop2-select-submitted', '#demo, function(){
+$(document).on('drop2-select-submitted', '#demo', function(){
    console.log('trigerrred - H');
 });
 ```
