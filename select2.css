@@ -257,9 +257,11 @@ span.drop2-choice {
   padding: 10px;
   padding-top: 35px;
   border-bottom-right-radius: 6px;
-display: none;
+  display: none;
+  overflow: hidden;
 }
-.drop-body:has(.drop-drawer > ul > li[drop-selected="true"]) .selected-options-container{
+
+.drop-body:has(.drop-drawer > ul > li[drop-selected="true"]) .selected-options-container {
   display: block;
 }
 
@@ -278,6 +280,7 @@ display: none;
   width: 120px;
   display: flex;
   flex-direction: column;
+  overflow: scroll;
 }
 
 .selected-options .drop2-choice {
