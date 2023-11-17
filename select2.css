@@ -257,7 +257,10 @@ span.drop2-choice {
   padding: 10px;
   padding-top: 35px;
   border-bottom-right-radius: 6px;
-
+display: none;
+}
+.drop-body:has(.drop-drawer > ul > li[drop-selected="true"]) .selected-options-container{
+  display: block;
 }
 
 .selected-options-container::after {
