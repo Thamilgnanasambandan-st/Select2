@@ -138,8 +138,8 @@
                 'max-height': he + 'px',
                 'opacity': 1,
             });
-            $drop2_body.find('.selected-options-container').css({
-                'max-height': $drop2_body.height() + 'px',
+            $drop2_body.find('.selected-options').css({
+                'max-height': $drop2_body.height() - ($drop2_body.find('.selected-options-container').innerHeight()- $drop2_body.find('.selected-options-container').height()) + 'px',
             });
         }
 
@@ -198,10 +198,10 @@
                         $drop2_list_body.scrollTop(list_height * (currentIndex - (settings.options - 2)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
                     } else
-                        if (event.keyCode === 13) {
-                            var target = $drop2_list_body.find(".drop-hover")
-                            clickOption(target)
-                        }
+                    if (event.keyCode === 13) {
+                        var target = $drop2_list_body.find(".drop-hover")
+                        clickOption(target)
+                    }
                 }
             })
             actionEvent()
@@ -246,7 +246,7 @@
             });
         }
 
-        // Select or Deselect All Searched options 
+        // Select or Deselect All Searched options
         function searchClear() {
             var temp = []
             clearOptions()
