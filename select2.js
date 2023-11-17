@@ -17,7 +17,8 @@
                 $el = $jq
                 $jq.addClass(`drop2-select`)
                 // Create drop conatiner and header
-                $jq.after(`<div class='drop-container ${$jq.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${ settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'><div class='selected-options-container'><div class='${ settings.selectedDrawer ? 'selected-options' : '' }'></div></div><ul></ul>${$jq.attr('multiple') ? "<div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div>`)
+                $jq.after(`<div class='drop-container ${$jq.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'>${settings.selectedDrawer ? '<div class="selected-options-container"><div class="selected-options"></div></div>' : ''}<div class='drop-drawer'><ul></ul>${$jq.attr('multiple') ? "<div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div></div>`)
+
                 component()
                 //Crate drop list
                 methods.updateList();
@@ -52,7 +53,7 @@
                 $drop2_list_body.html(' ');
                 $drop2_list_body.css('opacity', 0);
                 if ($select_options.length >= settings.searchMin && $drop2_body.find('input').length == 0) {
-                    $drop2_body.prepend(`<div class='search-section'><input type="text" placeholder="Search" data-search=""> ${isMultiple ? '<div class="s-action"><div>'+$jq.attr('subtitle')+'</div><div><a class="s-select-all">All</a><a class="s-clear-all">Clear</a></div></div>' : ''} </div> `)
+                    $drop2_body.find('.drop-drawer').prepend(`<div class='search-section'><input type="text" placeholder="Search" data-search=""> ${isMultiple ? '<div class="s-action"><div>' + $jq.attr('subtitle') + '</div><div><a class="s-select-all">All</a><a class="s-clear-all">Clear</a></div></div>' : ''} </div> `)
                 }
                 //To declare the search element end
                 $select_options.each(function (index) {
@@ -137,6 +138,9 @@
                 'max-height': he + 'px',
                 'opacity': 1,
             });
+            $drop2_body.find('.selected-options-container').css({
+                'max-height': $drop2_body.height() + 'px',
+            });
         }
 
         // Assign Badges
@@ -203,8 +207,8 @@
             actionEvent()
         }
 
-         // Filter Search Options
-         function searchOptions(target) {
+        // Filter Search Options
+        function searchOptions(target) {
             target.find('[data-search]').on('keyup', function (event) {
                 var searchTerm = $(this).val().toLowerCase();
                 target.find(`ul li`).each(function () {
@@ -242,8 +246,8 @@
             });
         }
 
-         // Select or Deselect All Searched options 
-         function searchClear() {
+        // Select or Deselect All Searched options 
+        function searchClear() {
             var temp = []
             clearOptions()
 
