@@ -41,10 +41,13 @@
                 keyEvents()
                 // Close dropdown while click outside
                 $(document).on("click", function (event) {
-                    var $trigger = $jq.next()
-                    if ($trigger !== event.target && !$trigger.has(event.target).length) {
-                        methods.hide()
+                    if(!isMultiple){
+                        var $trigger = $jq.next()
+                        if ($trigger !== event.target && !$trigger.has(event.target).length) {
+                            methods.hide()
+                        }
                     }
+                    
                 })
             },
             //Crate drop list
@@ -96,7 +99,10 @@
                         createIndex()
                         keyPressed = true;
                     }
-                })
+                });
+                if(isMultiple){
+                    $(document).find('.multiselect-drop').has('div[drop-render="hide"]').css("z-index", "-1");
+                }
             },
             // Hide methods
             hide: function () {
@@ -107,6 +113,12 @@
                 $drop2_body.find('.hidden').each(function () {
                     $(this).removeClass('hidden').show()
                 })
+                $drop2_body.find('.drop-hover').each(function () {
+                    $(this).removeClass('drop-hover')
+                })
+                if($drop2_body.attr('drop-render')== 'show' && isMultiple){
+                    $(document).find('.multiselect-drop').has('div[drop-render="hide"]').css("z-index", "0");
+                }
                 $drop2_body.attr('drop-render', 'hide');
             },
             // Add more methods as needed...
@@ -290,7 +302,7 @@
                     $jq.trigger('drop2-select-submitted');
                     badgeCount();
                     searchClear()
-
+                    console.log('hh')
                 })
                 $drop2_body.find(`.drop-cancel`).on('click', function () {
                     let difference = selected.filter(x => !$jq.val().includes(x));
@@ -356,6 +368,10 @@
             if (currentListSelected === 'true') {
                 if (isMultiple) {
                     selected = selected.filter(num => num != target.attr('data-key'));
+                }else{
+                    $drop2_head.text(target.children('span:first-child').text())
+                    $jq.trigger('drop2-select-submitted');
+                    methods.hide()
                 }
             } else {
                 if (isMultiple) {
@@ -373,7 +389,6 @@
                     methods.hide()
                 }
             }
-            actionEvent()
         }
 
         // Here add temporary selected options
