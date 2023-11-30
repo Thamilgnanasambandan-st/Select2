@@ -27,8 +27,12 @@
                 $drop2_head.on('click', function () {
                     if ($drop2_body.attr("drop-render") == 'hide') {
                         setTimeout(function () {
-                            methods.show();
-
+                            if (isMultiple && $(document).find('.multiselect-drop').children('div[drop-render="show"]').length == 0 ) {
+                                methods.show();
+                            }else if(!isMultiple){
+                                methods.show();
+                            }
+                           
                         }, 0);
 
                     } else {
@@ -41,13 +45,13 @@
                 keyEvents()
                 // Close dropdown while click outside
                 $(document).on("click", function (event) {
-                    if(!isMultiple){
+                    if (!isMultiple) {
                         var $trigger = $jq.next()
                         if ($trigger !== event.target && !$trigger.has(event.target).length) {
                             methods.hide()
                         }
                     }
-                    
+
                 })
             },
             //Crate drop list
@@ -100,9 +104,6 @@
                         keyPressed = true;
                     }
                 });
-                if(isMultiple){
-                    $(document).find('.multiselect-drop').has('div[drop-render="hide"]').css("z-index", "-1");
-                }
             },
             // Hide methods
             hide: function () {
@@ -116,9 +117,7 @@
                 $drop2_body.find('.drop-hover').each(function () {
                     $(this).removeClass('drop-hover')
                 })
-                if($drop2_body.attr('drop-render')== 'show' && isMultiple){
-                    $(document).find('.multiselect-drop').has('div[drop-render="hide"]').css("z-index", "0");
-                }
+                
                 $drop2_body.attr('drop-render', 'hide');
             },
             // Add more methods as needed...
@@ -151,7 +150,7 @@
                 'opacity': 1,
             });
             $drop2_body.find('.selected-options').css({
-                'max-height': $drop2_body.height() - ($drop2_body.find('.selected-options-container').innerHeight()- $drop2_body.find('.selected-options-container').height()) + 'px',
+                'max-height': $drop2_body.height() - ($drop2_body.find('.selected-options-container').innerHeight() - $drop2_body.find('.selected-options-container').height()) + 'px',
             });
         }
 
@@ -210,10 +209,10 @@
                         $drop2_list_body.scrollTop(list_height * (currentIndex - (settings.options - 2)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
                     } else
-                    if (event.keyCode === 13) {
-                        var target = $drop2_list_body.find(".drop-hover")
-                        clickOption(target)
-                    }
+                        if (event.keyCode === 13) {
+                            var target = $drop2_list_body.find(".drop-hover")
+                            clickOption(target)
+                        }
                 }
             })
             actionEvent()
@@ -302,7 +301,6 @@
                     $jq.trigger('drop2-select-submitted');
                     badgeCount();
                     searchClear()
-                    console.log('hh')
                 })
                 $drop2_body.find(`.drop-cancel`).on('click', function () {
                     let difference = selected.filter(x => !$jq.val().includes(x));
@@ -368,7 +366,7 @@
             if (currentListSelected === 'true') {
                 if (isMultiple) {
                     selected = selected.filter(num => num != target.attr('data-key'));
-                }else{
+                } else {
                     $drop2_head.text(target.children('span:first-child').text())
                     $jq.trigger('drop2-select-submitted');
                     methods.hide()
