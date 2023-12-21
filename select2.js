@@ -17,7 +17,7 @@
                 $el = $jq
                 $jq.addClass(`drop2-select`)
                 // Create drop conatiner and header
-                $jq.after(`<div class='drop-container ${$jq.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'>${settings.selectedDrawer ? '<div class="selected-options-container"><div class="selected-options"></div></div>' : ''}<div class='drop-drawer'><ul></ul>${$jq.attr('multiple') ? "<div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div></div>`)
+                $jq.after(`<div class='drop-container ${$jq.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'><div class='drop-drawer'><ul></ul>${$jq.attr('multiple') ? "<div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div>${settings.selectedDrawer ? '<div class="selected-options-container"><div class="selected-options"></div></div>' : ''}</div>`)
 
                 component()
                 //Crate drop list
@@ -27,8 +27,12 @@
                 $drop2_head.on('click', function () {
                     if ($drop2_body.attr("drop-render") == 'hide') {
                         setTimeout(function () {
-                            methods.show();
-
+                            if (isMultiple && $(document).find('.multiselect-drop').children('div[drop-render="show"]').length == 0 ) {
+                                methods.show();
+                            }else if(!isMultiple){
+                                methods.show();
+                            }
+                           
                         }, 0);
 
                     } else {
@@ -41,10 +45,13 @@
                 keyEvents()
                 // Close dropdown while click outside
                 $(document).on("click", function (event) {
-                    var $trigger = $jq.next()
-                    if ($trigger !== event.target && !$trigger.has(event.target).length) {
-                        methods.hide()
+                    if (!isMultiple) {
+                        var $trigger = $jq.next()
+                        if ($trigger !== event.target && !$trigger.has(event.target).length) {
+                            methods.hide()
+                        }
                     }
+
                 })
             },
             //Crate drop list
@@ -96,7 +103,7 @@
                         createIndex()
                         keyPressed = true;
                     }
-                })
+                });
             },
             // Hide methods
             hide: function () {
@@ -107,6 +114,10 @@
                 $drop2_body.find('.hidden').each(function () {
                     $(this).removeClass('hidden').show()
                 })
+                $drop2_body.find('.drop-hover').each(function () {
+                    $(this).removeClass('drop-hover')
+                })
+                
                 $drop2_body.attr('drop-render', 'hide');
             },
             // Add more methods as needed...
@@ -139,7 +150,7 @@
                 'opacity': 1,
             });
             $drop2_body.find('.selected-options').css({
-                'max-height': $drop2_body.height() - ($drop2_body.find('.selected-options-container').innerHeight()- $drop2_body.find('.selected-options-container').height()) + 'px',
+                'max-height': $drop2_body.height() - ($drop2_body.find('.selected-options-container').innerHeight() - $drop2_body.find('.selected-options-container').height()) + 'px',
             });
         }
 
@@ -198,10 +209,10 @@
                         $drop2_list_body.scrollTop(list_height * (currentIndex - (settings.options - 2)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
                     } else
-                    if (event.keyCode === 13) {
-                        var target = $drop2_list_body.find(".drop-hover")
-                        clickOption(target)
-                    }
+                        if (event.keyCode === 13) {
+                            var target = $drop2_list_body.find(".drop-hover")
+                            clickOption(target)
+                        }
                 }
             })
             actionEvent()
@@ -290,7 +301,6 @@
                     $jq.trigger('drop2-select-submitted');
                     badgeCount();
                     searchClear()
-
                 })
                 $drop2_body.find(`.drop-cancel`).on('click', function () {
                     let difference = selected.filter(x => !$jq.val().includes(x));
@@ -356,6 +366,10 @@
             if (currentListSelected === 'true') {
                 if (isMultiple) {
                     selected = selected.filter(num => num != target.attr('data-key'));
+                } else {
+                    $drop2_head.text(target.children('span:first-child').text())
+                    $jq.trigger('drop2-select-submitted');
+                    methods.hide()
                 }
             } else {
                 if (isMultiple) {
@@ -373,7 +387,6 @@
                     methods.hide()
                 }
             }
-            actionEvent()
         }
 
         // Here add temporary selected options
