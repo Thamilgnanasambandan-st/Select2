@@ -17,12 +17,11 @@
                 $el = $jq
                 $jq.addClass(`drop2-select`)
                 // Create drop conatiner and header
-                $jq.after(`<div class='drop-container ${$jq.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'>${settings.selectedDrawer ? '<div class="selected-options-container"><div class="selected-options"></div></div>' : ''}<div class='drop-drawer'><ul></ul>${$jq.attr('multiple') ? "<div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div></div>`)
-
+                $jq.after(`<div class='drop-container ${$jq.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'><div class='drop-drawer'><ul></ul>${$jq.attr('multiple') ? "<div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div>${ settings.selectedDrawer && isMultiple ? '<div class="selected-options-container"><div class="selected-options"></div></div>' : ''}</div>`)
                 component()
                 //Crate drop list
                 methods.updateList();
-                searchOptions($drop2_body);
+
                 //Open drop while click header
                 $drop2_head.on('click', function () {
                     if ($drop2_body.attr("drop-render") == 'hide') {
@@ -32,7 +31,7 @@
                             }else if(!isMultiple){
                                 methods.show();
                             }
-                           
+
                         }, 0);
 
                     } else {
@@ -89,6 +88,7 @@
                     badgeCount();
                     searchClear()
                 }
+                searchOptions($drop2_body);
             },
             // Show methods
             show: function () {
@@ -117,7 +117,7 @@
                 $drop2_body.find('.drop-hover').each(function () {
                     $(this).removeClass('drop-hover')
                 })
-                
+
                 $drop2_body.attr('drop-render', 'hide');
             },
             // Add more methods as needed...
@@ -209,10 +209,10 @@
                         $drop2_list_body.scrollTop(list_height * (currentIndex - (settings.options - 2)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
                     } else
-                        if (event.keyCode === 13) {
-                            var target = $drop2_list_body.find(".drop-hover")
-                            clickOption(target)
-                        }
+                    if (event.keyCode === 13) {
+                        var target = $drop2_list_body.find(".drop-hover")
+                        clickOption(target)
+                    }
                 }
             })
             actionEvent()
@@ -342,7 +342,7 @@
                 $jq.next(`.drop-container`).find(`.selected-options`).text('');
                 clearAll()
             } else if (!isMultiple) {
-                var selected_data = $jq.find(`[value=${$jq.val()}]`).text();
+                var selected_data = $jq.find(`[value='${$jq.val()}']`).text();
                 $drop2_head.text(selected_data)
             }
         }
