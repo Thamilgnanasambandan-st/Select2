@@ -192,10 +192,17 @@ input[data-search]::placeholder {
 
 }
 
-.drop-hover {
+.drop-hover:not([disabled]) {
   background-color: rgba(var(--hover), 0.4) !important;
   cursor: pointer;
   color: #fff;
+}
+li[disabled]{
+background-color: #aaa;
+color: white;
+cursor: not-allowed;
+pointer-events: none;
+
 }
 
 span.drop2-choice {
