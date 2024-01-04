@@ -63,24 +63,30 @@
                     $drop2_body.find('.drop-drawer').prepend(`<div class='search-section'><input type="text" placeholder="Search" data-search=""> ${isMultiple ? '<div class="s-action"><div>' + $jq.attr('subtitle') + '</div><div><a class="s-select-all">All</a><a class="s-clear-all">Clear</a></div></div>' : ''} </div> `)
                 }
                 //To declare the search element end
-                $select_options.each(function (index) {
-                    $(this).attr("data-drop2-id", `${index}`);
-                    var badge_condition = $(this).attr("data-badge");
-                    let diabled_condition = $(this).attr('disabled')
-                    let htTag = badgeHtml(badge_condition);
-                    let listElement = $('<li>');
-                    listElement.attr({
-                        'data-key': $(this).val(),
-                        'drop-selected': $(this).is(':selected') ? true : false,
-                        'disabled': diabled_condition ? true : false,
+                if($select_options.length > 0){
+                    $select_options.each(function (index) {
+                        $(this).attr("data-drop2-id", `${index}`);
+                        var badge_condition = $(this).attr("data-badge");
+                        let diabled_condition = $(this).attr('disabled')
+                        let htTag = badgeHtml(badge_condition);
+                        let listElement = $('<li>');
+                        listElement.attr({
+                            'data-key': $(this).val(),
+                            'drop-selected': $(this).is(':selected') ? true : false,
+                            'disabled': diabled_condition ? true : false,
+                        });
+                        diabled_condition ? '' : listElement.attr({
+                            'data-drop2-id': index
+                        });
+                        listElement.append(`<span>${$(this).text()}</span>`);
+                        listElement.append(htTag);
+                        $drop2_list_body.append(listElement)
                     });
-                    diabled_condition ? '' : listElement.attr({
-                        'data-drop2-id': index
-                    });
-                    listElement.append(`<span>${$(this).text()}</span>`);
-                    listElement.append(htTag);
-                    $drop2_list_body.append(listElement)
-                });
+                }
+                else {
+                    $drop2_list_body.append('<ul><li style="pointer-events: none;">No data found</li></ul>')
+                }
+
                 $drop2_list_body.find('li').length ? $drop2_body.removeClass('drop-no-data') : $drop2_body.addClass('drop-no-data')
                 // Select option default selected
                 $drop2_list = $($jq).next(`.drop-container`).find(`.drop-body ul li`)
@@ -218,12 +224,12 @@
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).removeClass('drop-hover');
                         currentIndex--;
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
-                        
+
                     } else
-                        if (event.keyCode === 13) {
-                            var target = $drop2_list_body.find(".drop-hover")
-                            clickOption(target)
-                        }
+                    if (event.keyCode === 13) {
+                        var target = $drop2_list_body.find(".drop-hover")
+                        clickOption(target)
+                    }
                 }
             })
             actionEvent()
