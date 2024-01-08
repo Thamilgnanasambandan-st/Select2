@@ -56,6 +56,16 @@ $('#demo').drop2({
     selectedDrawer: true
 });
 ```
+#### Update Value
+
+Show Selected options separately 
+ 
+
+Example:  
+```js
+$('#demo').('['v1']')
+$('#car').drop2('updateList');
+```
 
 #### Custom Header 
 
