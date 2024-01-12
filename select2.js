@@ -11,6 +11,7 @@
             customeheader: false,
             countBadge: false,
             selectedDrawer: false,
+            placeholder: 'Select Options',
         }, options);
         var methods = {
             init: function () {
@@ -18,7 +19,7 @@
                 $jq.addClass(`drop2-select`)
                 $jq.addClass(`drop2-initiated`)
                 // Create drop conatiner and header
-                $jq.after(`<div class='drop-container ${$jq.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${settings.customeheader ? settings.customeheader : 'Select Options'}</div> <div class='drop-body' drop-render='hide'><div class='drop-drawer'><ul></ul>${$jq.attr('multiple') ? "<div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div>${settings.selectedDrawer && isMultiple ? '<div class="selected-options-container"><div class="selected-options"></div></div>' : ''}</div>`)
+                $jq.after(`<div class='drop-container ${$jq.attr('multiple') ? 'multiselect-drop' : ''} '><div class='drop-header ${settings.customeheader ? 'drop-custom-header' : ''}'>${settings.customeheader ? settings.customeheader : settings.placeholder }</div> <div class='drop-body' drop-render='hide'><div class='drop-drawer'><ul></ul>${$jq.attr('multiple') ? "<div class='drop-action-btn'><a class='drop-cancel'>Cancel</a><a class='drop-select'>submit</a></div>" : ''}</div>${settings.selectedDrawer && isMultiple ? '<div class="selected-options-container"><div class="selected-options"></div></div>' : ''}</div>`)
                 component()
                 //Crate drop list
                 methods.updateList();
@@ -28,6 +29,7 @@
                     if ($drop2_body.attr("drop-render") == 'hide') {
                         setTimeout(function () {
                             if (isMultiple && $(document).find('.multiselect-drop').children('div[drop-render="show"]').length == 0) {
+                                
                                 methods.show();
                             } else if (!isMultiple) {
                                 methods.show();
@@ -356,7 +358,7 @@
                 clearAll()
                 dispalyValues();
             } else if (isMultiple) {
-                $drop2_head.html(`${settings.customeheader ? settings.customeheader : 'Select Options'}`);
+                $drop2_head.html(`${settings.customeheader ? settings.customeheader : settings.placeholder }`);
                 $jq.next(`.drop-container`).find(`.selected-options`).text('');
                 clearAll()
             } else if (!isMultiple) {
