@@ -64,6 +64,7 @@
                 if ($select_options.length >= settings.searchMin && $drop2_body.find('input').length == 0) {
                     $drop2_body.find('.drop-drawer').prepend(`<div class='search-section'><input type="text" placeholder="Search" data-search=""> ${isMultiple ? '<div class="s-action"><div>' + $jq.attr('subtitle') + '</div><div><a class="s-select-all">All</a><a class="s-clear-all">Clear</a></div></div>' : ''} </div> `)
                 }
+                
                 //To declare the search element end
                 if($select_options.length > 0){
                     $select_options.each(function (index) {
@@ -351,7 +352,7 @@
                         selected.push($(this).val())
                         selected = [...new Set(selected)]
                         settings.customeheader || $drop2_head.hasClass('drop-custom-header') ? '' : $jq.next(`.drop-container`).find(`.drop-header`).append(`<span class="drop2-choice" data-key="${$(this).val()}">${$(this).text()}<span class="clear-choice" onclick="event.stopPropagation()">×</span></span> `);
-                        settings.selectedDrawer || $drop2_body.children().hasClass('selected-options') ? $jq.next(`.drop-container`).find(`.selected-options`).append(`<span class="drop2-choice" data-key="${$(this).val()}">${$(this).text()}<span class="clear-choice" onclick="event.stopPropagation()">×</span></span> `) : '';
+                        settings.selectedDrawer || $drop2_body.children(`div.selected-options-container`).length == 1 ? $jq.next(`.drop-container`).find(`.selected-options`).append(`<span class="drop2-choice" data-key="${$(this).val()}">${$(this).text()}<span class="clear-choice" onclick="event.stopPropagation()">×</span></span> `) : '';
                     }
                 })
                 settings.customeheader || $drop2_head.hasClass('drop-custom-header') ? '' : $jq.next(`.drop-container`).find(`.drop-header`).append(`${selected.length > 0 ? "<span class='drop-clear'>&#x2715</span>" : ''}`);
@@ -396,7 +397,7 @@
                     var temp = []
                     $drop2_list_body.find(`li[drop-selected = 'true']`).each(function () {
                         temp.push($(this).attr('data-key'))
-                    })
+                    })                    
                     selected.push(target.attr('data-key'))
                     selected = [...new Set(selected.concat(temp))]
                     searchClear()
@@ -407,6 +408,7 @@
                     methods.hide()
                 }
             }
+              actionEvent()
         }
 
         // Here add temporary selected options
@@ -417,8 +419,8 @@
                 $jq.next(`.drop-container`).find(`.selected-options`).find(`span[data-key="${$(target).attr('data-key')}"]`).remove()
             } else {
                 target.attr('drop-selected', 'true');
-                (settings.selectedDrawer && isMultiple) || ($drop2_body.children().hasClass('selected-options') && isMultiple) ? $jq.next(`.drop-container`).find(`.selected-options`).append(`<span class="drop2-choice" data-key="${$(target).attr('data-key')}">${$(target).children('span:first-child').text()}<span class="clear-choice" onclick="event.stopPropagation()">×</span></span> `) : '';
-                dispalyValues()
+                (settings.selectedDrawer && isMultiple) || ($drop2_body.children('div.selected-options-container').length == 1 && isMultiple) ? $jq.next(`.drop-container`).find(`.selected-options`).append(`<span class="drop2-choice" data-key="${$(target).attr('data-key')}">${$(target).children('span:first-child').text()}<span class="clear-choice" onclick="event.stopPropagation()">×</span></span> `) : '';
+                dispalyValues();
             }
         }
 
