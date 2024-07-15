@@ -63,8 +63,8 @@ Show Selected options separately
 
 Example:  
 ```js
-$('#demo').('['v1']')
-$('#car').drop2('updateList');
+$('#demo').val('['v1']')
+$('#demo').drop2('updateList');
 ```
 
 #### Custom Header 
@@ -127,7 +127,7 @@ triggers when drop2 multiple options submitted
 Example:  
 ```js
 $(document).on('drop2-select-submitted', '#demo', function(){
-   console.log('trigerrred - H');
+   console.log($('#demo').val());
 });
 ```
 
