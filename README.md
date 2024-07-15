@@ -64,7 +64,7 @@ Show Selected options separately
 Example:  
 ```js
 $('#demo').val('['v1']')
-$('#car').drop2('updateList');
+$('#demo').drop2('updateList');
 ```
 
 #### Custom Header 
