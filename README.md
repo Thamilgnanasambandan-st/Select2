@@ -63,7 +63,7 @@ Show Selected options separately
 
 Example:  
 ```js
-$('#demo').('['v1']')
+$('#demo').val('['v1']')
 $('#car').drop2('updateList');
 ```
 
@@ -127,7 +127,7 @@ triggers when drop2 multiple options submitted
 Example:  
 ```js
 $(document).on('drop2-select-submitted', '#demo', function(){
-   console.log('trigerrred - H');
+   console.log($(#demo).val());
 });
 ```
 
