@@ -216,7 +216,7 @@
                     }
                 }
             })
-            actionEvent()
+          
         }
 
         // Filter Search Options
@@ -262,7 +262,6 @@
         function searchClear() {
             var temp = []
             clearOptions()
-
             function clearOptions() {
                 $jq.next(`.drop-container`).find(`.selected-options`).find('.clear-choice').on('click', function () {
                     $(this).parent().remove();
@@ -296,7 +295,7 @@
         function actionEvent() {
             if (isMultiple) {
                 $drop2_body.find(`.drop-select`).on('click', function () {
-                    $jq.val(selected).change();
+                     $jq.val(selected).change();
                     settings.customeheader && isMultiple ? '' : displayMultiple($select_options);
                     methods.hide();
                     $jq.trigger('drop2-select-submitted');
@@ -342,6 +341,7 @@
                 $drop2_head.html(`${settings.customeheader ? settings.customeheader : 'Select Options'}`);
                 $jq.next(`.drop-container`).find(`.selected-options`).text('');
                 clearAll()
+                dispalyValues();
             } else if (!isMultiple) {
                 var selected_data = $jq.find(`[value='${$jq.val()}']`).text();
                 $drop2_head.text(selected_data)
@@ -388,6 +388,7 @@
                     methods.hide()
                 }
             }
+            actionEvent()
         }
 
         // Here add temporary selected options
