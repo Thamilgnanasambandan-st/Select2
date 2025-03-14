@@ -81,6 +81,7 @@
                 // Select option default selected
                 $drop2_list = $($jq).next(`.drop-container`).find(`.drop-body ul li`)
                 // createIndex('sample');
+            
                 $jq.next().find('[data-drop2-id]').on('click', function () {
                     clickOption($(this));
                 })
@@ -105,6 +106,7 @@
                         keyPressed = true;
                     }
                 });
+                 actionEvent()
             },
             // Hide methods
             hide: function () {
@@ -210,9 +212,12 @@
                         $drop2_list_body.scrollTop(list_height * (currentIndex - (settings.options - 2)));
                         $drop2_list_body.find(`li[data-drop2-id="${currentIndex}"]`).addClass('drop-hover');
                     } else
-                    if (event.keyCode === 13) {
+                    if (event.keyCode === 13  ) {
                         var target = $drop2_list_body.find(".drop-hover")
-                        clickOption(target)
+                        if($(target).length > 0 ){
+                            clickOption(target)
+
+                        }
                     }
                 }
             })
@@ -362,6 +367,7 @@
 
         // Selecting Options and Update Attributes
         function clickOption(target) {
+            
             let currentListSelected = target.attr('drop-selected');
             listSelected(target, currentListSelected)
             if (currentListSelected === 'true') {
